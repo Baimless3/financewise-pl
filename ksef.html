@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator form opodatkowania 2025 — Regulatora</title>
+<meta name="description" content="Porównaj skala podatkowa vs podatek liniowy vs ryczałt 2025. Oblicz który wariant daje najniższy podatek dla Twojej firmy.">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+.tax-layout{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 94px)}
+.tax-form{border-right:1px solid var(--border);padding:2rem;background:var(--bg2);display:flex;flex-direction:column;gap:1.4rem}
+.tax-results{padding:2rem;overflow-y:auto}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:var(--text2);letter-spacing:.04em}
+.field input,.field select{background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:9px 12px;font-size:14px;color:var(--text);font-family:var(--ff-body);outline:none;transition:border-color 200ms;width:100%;-webkit-appearance:none;appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239B9489' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.field input:focus,.field select:focus{border-color:rgba(201,168,76,.5)}
+.field-hint{font-size:11px;color:var(--text3);line-height:1.4}
+.range-wrap{position:relative}
+.range-input{width:100%;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:var(--bg3);border:1px solid var(--border2);outline:none;cursor:pointer}
+.range-input::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--bg)}
+.range-input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--bg)}
+.range-val{font-size:13px;font-weight:500;color:var(--gold);margin-top:5px}
+.section-divider{padding:.8rem 0;border-top:1px solid var(--border);margin-top:.2rem}
+.section-divider span{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+.toggle-label{font-size:13px;color:var(--text2)}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--bg3);border:1px solid var(--border2);border-radius:11px;cursor:pointer;transition:background 200ms}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:2px;top:2px;background:var(--text3);border-radius:50%;transition:transform 200ms,background 200ms}
+.toggle input:checked+.toggle-slider{background:var(--gold-bg);border-color:rgba(201,168,76,.4)}
+.toggle input:checked+.toggle-slider::before{transform:translateX(18px);background:var(--gold)}
+
+/* COMPARISON TABLE */
+.compare-header{margin-bottom:1.5rem}
+.compare-header h2{font-size:1.4rem;margin-bottom:.3rem}
+.compare-header p{font-size:13px;color:var(--text2)}
+.compare-grid{display:grid;grid-template-columns:180px repeat(3,1fr);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem}
+.cg-header{padding:.8rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.cg-header.winner{background:var(--gold-bg);border-bottom-color:rgba(201,168,76,.3)}
+.cg-col-title{padding:.8rem 1rem;background:var(--bg3);border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.cg-col-title h4{font-size:13px;font-weight:500;font-family:var(--ff-body);margin-bottom:2px}
+.cg-col-title span{font-size:11px;color:var(--text3)}
+.cg-col-title:last-child{border-right:none}
+.cg-col-title.winner{background:var(--gold-bg);border-bottom-color:rgba(201,168,76,.3)}
+.cg-cell{padding:.75rem 1rem;border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-size:13px;color:var(--text2);vertical-align:middle}
+.cg-cell:last-child{border-right:none}
+.cg-cell.label-cell{color:var(--text3);font-size:12px;background:var(--bg2)}
+.cg-cell.winner{background:rgba(201,168,76,.04)}
+.cg-cell strong{color:var(--text);font-weight:500;display:block;font-size:14px}
+.cg-cell.total-row{background:var(--bg3);font-weight:500}
+.cg-cell.total-row strong{font-size:15px;color:var(--text)}
+.cg-cell.best-total strong{color:var(--green);font-size:16px}
+.cg-cell.worst-total strong{color:var(--red)}
+.winner-badge{display:inline-block;font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;background:var(--green-bg);color:var(--green);border:1px solid rgba(78,155,111,.2);margin-top:3px}
+.saving-chip{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:2px;background:var(--green-bg);color:var(--green);border:1px solid rgba(78,155,111,.2);margin-top:4px}
+
+.recommendation{border:1px solid rgba(201,168,76,.3);border-radius:6px;padding:1.4rem;background:var(--gold-bg);margin-bottom:1.5rem}
+.recommendation h3{font-size:1.1rem;margin-bottom:.5rem}
+.recommendation p{font-size:13px;color:var(--text2);line-height:1.6}
+.breakdown-mini{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.2rem;margin-bottom:1rem}
+.breakdown-mini h4{font-size:12px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem}
+.bm-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid var(--border);font-size:13px}
+.bm-row:last-child{border-bottom:none;font-weight:500;padding-top:.5rem;margin-top:.2rem}
+.bm-row span:first-child{color:var(--text2)}
+.bm-row span:last-child{color:var(--text);font-weight:400}
+.disclaimer{font-size:11px;color:var(--text3);line-height:1.6;padding:1rem;background:var(--bg3);border-radius:4px;margin-top:1rem;border:1px solid var(--border)}
+.tab-bar{display:flex;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
+.tab-btn{padding:.6rem 1.2rem;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--ff-body);transition:all .2s;margin-bottom:-1px}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.calc-title-bar{padding:1.5rem 2rem;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:space-between}
+@media(max-width:900px){.tax-layout{grid-template-columns:1fr}.tax-form{border-right:none;border-bottom:1px solid var(--border)}.compare-grid{grid-template-columns:130px repeat(3,1fr)}}
+@media(max-width:600px){.compare-grid{grid-template-columns:100px repeat(3,1fr)}.cg-header,.cg-col-title,.cg-cell{padding:.5rem .6rem;font-size:11px}.cg-cell strong{font-size:12px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>Regulatora</a>
+    <nav class="nav-links">
+      <a href="podatki.html" class="active">Podatki</a>
+      <a href="zus.html">ZUS</a>
+      <a href="ksef.html">KSeF</a>
+      <a href="prawo-pracy.html">Prawo pracy</a>
+      <a href="narzedzia.html">Narzędzia</a>
+      <a href="index.html#newsletter" class="nav-cta">Newsletter →</a>
+    </nav>
+    <div class="nav-right"><div class="nav-alert">Stawki 2025</div></div>
+  </div>
+</nav>
+
+<div class="calc-title-bar">
+  <div>
+    <div class="breadcrumb" style="margin-bottom:.4rem"><a href="index.html">Strona główna</a><span>›</span><a href="podatki.html">Podatki</a><span>›</span><span>Porównanie form</span></div>
+    <h1>Kalkulator form opodatkowania 2025</h1>
+  </div>
+  <p style="font-size:12px;color:var(--text3);text-align:right">Skala · Liniowy · Ryczałt<br>z ZUS i składką zdrowotną</p>
+</div>
+
+<div class="tax-layout">
+
+  <!-- FORM -->
+  <div class="tax-form">
+    <div class="field">
+      <label>Roczny przychód (zł)</label>
+      <input type="range" class="range-input" id="r-revenue" min="30000" max="1000000" step="5000" value="150000" oninput="syncRange('revenue')">
+      <input type="number" id="revenue" value="150000" min="0" step="5000" oninput="syncInput('revenue')">
+      <div class="field-hint">Brutto przed kosztami i podatkami</div>
+    </div>
+
+    <div class="field">
+      <label>Roczne koszty uzyskania przychodu (zł)</label>
+      <input type="range" class="range-input" id="r-costs" min="0" max="500000" step="5000" value="30000" oninput="syncRange('costs')">
+      <input type="number" id="costs" value="30000" min="0" step="5000" oninput="syncInput('costs')">
+      <div class="field-hint">Dotyczy skali i liniowego. Ryczałt nie uwzględnia kosztów.</div>
+    </div>
+
+    <div class="section-divider"><span>Ryczałt ewidencjonowany</span></div>
+
+    <div class="field">
+      <label for="ryczalt-rate">Stawka ryczałtu dla Twojej branży</label>
+      <select id="ryczalt-rate" onchange="calculate()">
+        <option value="0.085">8,5% — usługi różne, wynajem prywatny</option>
+        <option value="0.12" selected>12% — IT, programiści, analitycy</option>
+        <option value="0.14">14% — wolne zawody (lekarz, architekt)</option>
+        <option value="0.15">15% — handel, pośrednictwo, najem firm.</option>
+        <option value="0.17">17% — usługi o szczególnym charakterze</option>
+      </select>
+      <div class="field-hint">Stawka zależy od PKWiU/PKD Twojej działalności.</div>
+    </div>
+
+    <div class="section-divider"><span>Składki ZUS</span></div>
+
+    <div class="field">
+      <label for="zus-variant">Wariant ZUS</label>
+      <select id="zus-variant" onchange="calculate()">
+        <option value="prefer">Preferencyjne (pierwsze 24 mies.)</option>
+        <option value="full" selected>Pełne ZUS</option>
+      </select>
+    </div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Ubezpieczenie chorobowe</span>
+      <label class="toggle"><input type="checkbox" id="t-chorobowe" checked onchange="calculate()"><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Fundusz Pracy</span>
+      <label class="toggle"><input type="checkbox" id="t-fp" checked onchange="calculate()"><span class="toggle-slider"></span></label>
+    </div>
+
+    <div style="margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)">
+      <p style="font-size:11px;color:var(--text3);line-height:1.5">Wyniki obliczane automatycznie. Dla dokładniejszej analizy skonsultuj się z doradcą podatkowym.</p>
+      <a href="kalkulator-zus.html" class="btn btn-ghost" style="font-size:12px;margin-top:8px;width:100%;justify-content:center">Szczegółowy kalkulator ZUS →</a>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="tax-results">
+    <div class="compare-header">
+      <h2>Porównanie form opodatkowania <span style="color:var(--gold)" id="revenue-display">150 000 zł</span> przychodu</h2>
+      <p>Łączny koszt = podatek dochodowy + składka zdrowotna + ZUS społeczne</p>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="showTab('annual',this)">Rocznie</button>
+      <button class="tab-btn" onclick="showTab('monthly',this)">Miesięcznie</button>
+      <button class="tab-btn" onclick="showTab('breakdown',this)">Szczegółowy rozkład</button>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div id="tab-annual">
+      <div class="compare-grid" id="compare-table">
+        <!-- filled by JS -->
+      </div>
+      <div class="recommendation" id="recommendation"><!-- filled by JS --></div>
+    </div>
+
+    <div id="tab-monthly" style="display:none">
+      <div class="compare-grid" id="compare-table-monthly"></div>
+    </div>
+
+    <div id="tab-breakdown" style="display:none">
+      <div id="breakdown-detail"><!-- filled by JS --></div>
+    </div>
+
+    <div class="disclaimer">
+      ⚠ Obliczenia orientacyjne na podstawie stawek 2025. Skala: 12% do 120 000 zł dochodu, 32% powyżej. Kwota zmniejszająca podatek: 3 600 zł/rok. Składka zdrowotna na skali: 9% dochodu (min. 419,94 zł), liniowym: 4,9% (min. 419,94 zł), ryczałcie: wg progów przychodowych. ZUS pełne: ~1 489 zł/mies. bez chorobowego. Nie uwzględnia ulg podatkowych (np. IP Box, B+R). Skonsultuj się z księgowym.
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap">
+      <a href="kalkulator-zus.html" class="btn btn-ghost" style="font-size:12px">Kalkulator ZUS →</a>
+      <a href="kalkulator-ksef.html" class="btn btn-ghost" style="font-size:12px">Gotowość KSeF →</a>
+      <a href="podatki.html" class="btn btn-ghost" style="font-size:12px">Artykuły o podatkach →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-col"><div class="footer-logo"><span style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>Regulatora</div><p>Niezależny serwis monitorowania zmian prawno-podatkowych dla polskich przedsiębiorców.</p></div>
+    <div class="footer-col"><h5>Kategorie</h5><ul class="footer-links"><li><a href="zus.html">ZUS i składki</a></li><li><a href="podatki.html">Podatek dochodowy</a></li><li><a href="ksef.html">KSeF</a></li><li><a href="prawo-pracy.html">Prawo pracy</a></li></ul></div>
+    <div class="footer-col"><h5>Kalkulatory</h5><ul class="footer-links"><li><a href="kalkulator-zus.html">Kalkulator ZUS 2025</a></li><li><a href="kalkulator-ksef.html">Gotowość na KSeF</a></li><li><a href="kalkulator-podatki.html">Formy opodatkowania</a></li></ul></div>
+    <div class="footer-col"><h5>Informacje</h5><ul class="footer-links"><li><a href="#">O serwisie</a></li><li><a href="#">Polityka prywatności</a></li><li><a href="#">Kontakt</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 Regulatora / FinanceWise.pl</p><p class="footer-disclaimer">Treści informacyjne. Nie stanowią porady prawnej ani podatkowej. Serwis zawiera linki partnerskie.</p></div>
+</footer>
+
+<script>
+// ── CONSTANTS 2025 ────────────────────────────────────────────
+const ZUS_FULL = { emerytalna:4694.40*0.1952, rentowa:4694.40*0.08, chorobowa:4694.40*0.0245, wypadkowa:4694.40*0.0167, fp:4694.40*0.0245, fs:4694.40*0.001 };
+const ZUS_PREF = { emerytalna:1399.80*0.1952, rentowa:1399.80*0.08, chorobowa:1399.80*0.0245, wypadkowa:1399.80*0.0167, fp:0, fs:0 };
+const ZKM = 3600; // kwota zmniejszająca podatek roczna
+
+const fmt = v => Math.round(v).toLocaleString('pl-PL') + ' zł';
+const fmt2 = v => v.toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' zł';
+
+function getZUSmonthly() {
+  const v = document.getElementById('zus-variant').value;
+  const Z = v === 'full' ? ZUS_FULL : ZUS_PREF;
+  const ch = document.getElementById('t-chorobowe').checked;
+  const fp = document.getElementById('t-fp').checked && v === 'full';
+  return Z.emerytalna + Z.rentowa + (ch ? Z.chorobowa : 0) + Z.wypadkowa + (fp ? Z.fp : 0) + (v==='full'?Z.fs:0);
+}
+
+function getHealthSkala(annualIncome) {
+  // 9% od dochodu miesięcznie, min 419.94
+  const monthly = Math.max(419.94, (annualIncome/12)*0.09);
+  return monthly * 12;
+}
+
+function getHealthLiniowy(annualIncome) {
+  const monthly = Math.max(419.94, (annualIncome/12)*0.049);
+  return monthly * 12;
+}
+
+function getHealthRyczalt(annualRevenue) {
+  if (annualRevenue <= 60000) return 419.94 * 12;
+  if (annualRevenue <= 300000) return 699.11 * 12;
+  return 1258.39 * 12;
+}
+
+function calcSkala(rev, costs, zusMonthly) {
+  const dochod = Math.max(0, rev - costs);
+  const zusRoczny = zusMonthly * 12;
+  const podstawaPIT = Math.max(0, dochod - zusRoczny);
+  let pit;
+  if (podstawaPIT <= 120000) { pit = podstawaPIT * 0.12 - ZKM; }
+  else { pit = 120000 * 0.12 - ZKM + (podstawaPIT - 120000) * 0.32; }
+  pit = Math.max(0, pit);
+  const health = getHealthSkala(dochod);
+  return { pit, health, zus: zusRoczny, dochod };
+}
+
+function calcLiniowy(rev, costs, zusMonthly) {
+  const dochod = Math.max(0, rev - costs);
+  const zusRoczny = zusMonthly * 12;
+  const podstawaPIT = Math.max(0, dochod - zusRoczny);
+  const pit = podstawaPIT * 0.19;
+  const health = getHealthLiniowy(dochod);
+  return { pit, health, zus: zusRoczny, dochod };
+}
+
+function calcRyczalt(rev, ryczaltRate, zusMonthly) {
+  const zusRoczny = zusMonthly * 12;
+  const pit = rev * ryczaltRate;
+  const health = getHealthRyczalt(rev);
+  return { pit, health, zus: zusRoczny, dochod: rev };
+}
+
+let lastData = {};
+
+function calculate() {
+  const rev = parseFloat(document.getElementById('revenue').value) || 150000;
+  const costs = parseFloat(document.getElementById('costs').value) || 0;
+  const ryczaltRate = parseFloat(document.getElementById('ryczalt-rate').value) || 0.12;
+  const zusMonthly = getZUSmonthly();
+
+  const s = calcSkala(rev, costs, zusMonthly);
+  const l = calcLiniowy(rev, costs, zusMonthly);
+  const r = calcRyczalt(rev, ryczaltRate, zusMonthly);
+
+  const sTotal = s.pit + s.health + s.zus;
+  const lTotal = l.pit + l.health + l.zus;
+  const rTotal = r.pit + r.health + r.zus;
+
+  const sNet = rev - sTotal;
+  const lNet = rev - lTotal;
+  const rNet = rev - rTotal;
+
+  const totals = [sTotal, lTotal, rTotal];
+  const minTotal = Math.min(...totals);
+  const winnerIdx = totals.indexOf(minTotal);
+  const winnerNames = ['Skala podatkowa', 'Podatek liniowy', 'Ryczałt'];
+  const ryczaltRateDisplay = (ryczaltRate*100).toFixed(1).replace('.',',') + '%';
+
+  lastData = { s, l, r, sTotal, lTotal, rTotal, sNet, lNet, rNet, winnerIdx, rev, costs, zusMonthly, ryczaltRate };
+
+  document.getElementById('revenue-display').textContent = fmt(rev);
+
+  // Annual table
+  const isW = i => i === winnerIdx;
+  document.getElementById('compare-table').innerHTML = `
+    <div class="cg-header label-cell"></div>
+    ${['Skala podatkowa','Podatek liniowy',`Ryczałt ${ryczaltRateDisplay}`].map((n,i) => `
+      <div class="cg-col-title ${isW(i)?'winner':''}">
+        <h4>${n}</h4>
+        <span>${['12% / 32%','19%', ryczaltRateDisplay][i]}</span>
+        ${isW(i) ? '<div class="winner-badge">✓ Najlepsza opcja</div>' : ''}
+      </div>`).join('')}
+
+    <div class="cg-header label-cell">Dochód / podstawa</div>
+    ${[s.dochod, l.dochod, r.dochod].map((v,i) => `<div class="cg-cell ${isW(i)?'winner':''}"><strong>${fmt(v)}</strong></div>`).join('')}
+
+    <div class="cg-header label-cell">Podatek dochodowy</div>
+    ${[s.pit, l.pit, r.pit].map((v,i) => `<div class="cg-cell ${isW(i)?'winner':''}"><strong>${fmt(v)}</strong></div>`).join('')}
+
+    <div class="cg-header label-cell">Składka zdrowotna</div>
+    ${[s.health, l.health, r.health].map((v,i) => `<div class="cg-cell ${isW(i)?'winner':''}"><strong>${fmt(v)}</strong></div>`).join('')}
+
+    <div class="cg-header label-cell">ZUS społeczne</div>
+    ${[s.zus, l.zus, r.zus].map((v,i) => `<div class="cg-cell ${isW(i)?'winner':''}"><strong>${fmt(v)}</strong></div>`).join('')}
+
+    <div class="cg-header label-cell" style="background:var(--bg3)">Łączny koszt</div>
+    ${[sTotal, lTotal, rTotal].map((v,i) => `<div class="cg-cell total-row ${isW(i)?'best-total':''}"><strong>${fmt(v)}</strong>${isW(i)?`<div class="saving-chip">min. obciążenie</div>`:''}</div>`).join('')}
+
+    <div class="cg-header label-cell" style="background:var(--bg3)">Do kieszeni (rocznie)</div>
+    ${[sNet, lNet, rNet].map((v,i) => `<div class="cg-cell total-row ${isW(i)?'best-total':''}"><strong>${fmt(v)}</strong></div>`).join('')}
+  `;
+
+  // Monthly table
+  document.getElementById('compare-table-monthly').innerHTML = `
+    <div class="cg-header label-cell"></div>
+    ${['Skala','Liniowy',`Ryczałt`].map((n,i) => `<div class="cg-col-title ${isW(i)?'winner':''}"><h4>${n}</h4>${isW(i)?'<div class="winner-badge">✓</div>':''}</div>`).join('')}
+    <div class="cg-header label-cell">Podatek / mies.</div>
+    ${[s.pit, l.pit, r.pit].map((v,i) => `<div class="cg-cell ${isW(i)?'winner':''}"><strong>${fmt(v/12)}</strong></div>`).join('')}
+    <div class="cg-header label-cell">Zdrowotna / mies.</div>
+    ${[s.health, l.health, r.health].map((v,i) => `<div class="cg-cell ${isW(i)?'winner':''}"><strong>${fmt(v/12)}</strong></div>`).join('')}
+    <div class="cg-header label-cell">ZUS / mies.</div>
+    ${[s.zus, l.zus, r.zus].map((v,i) => `<div class="cg-cell ${isW(i)?'winner':''}"><strong>${fmt(zusMonthly)}</strong></div>`).join('')}
+    <div class="cg-header label-cell" style="background:var(--bg3)">Razem / mies.</div>
+    ${[sTotal, lTotal, rTotal].map((v,i) => `<div class="cg-cell total-row ${isW(i)?'best-total':''}"><strong>${fmt(v/12)}</strong></div>`).join('')}
+    <div class="cg-header label-cell" style="background:var(--bg3)">Do ręki / mies.</div>
+    ${[sNet, lNet, rNet].map((v,i) => `<div class="cg-cell total-row ${isW(i)?'best-total':''}"><strong>${fmt(v/12)}</strong></div>`).join('')}
+  `;
+
+  // Recommendation
+  const saving = Math.round(Math.max(...totals) - minTotal);
+  const winnerData = [s,l,r][winnerIdx];
+  const winnerAdvice = [
+    `Skala podatkowa opłaca się gdy masz wysokie koszty działalności — odliczasz je w całości. Przy niskich dochodach chronią Cię niższa stawka 12% i kwota wolna od podatku (30 000 zł).`,
+    `Podatek liniowy (19%) jest stabilny i przewidywalny. Opłaca się przy dochodzie powyżej ~120 000 zł rocznie, gdy unikniesz 32% na skali.`,
+    `Ryczałt ${ryczaltRateDisplay} jest korzystny gdy masz niskie koszty działalności — nie odliczasz kosztów, ale płacisz od przychodu brutto niską stawkę. Idealny dla branży IT (12%).`,
+  ][winnerIdx];
+
+  document.getElementById('recommendation').innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:.8rem">
+      <span style="font-size:20px">💡</span>
+      <h3>Rekomendacja: ${winnerNames[winnerIdx]}</h3>
+    </div>
+    <p>${winnerAdvice}</p>
+    ${saving > 500 ? `<p style="margin-top:.6rem"><strong style="color:var(--green)">Potencjalna oszczędność: ${fmt(saving)} rocznie</strong> w porównaniu do najdroższej opcji.</p>` : ''}
+  `;
+
+  // Breakdown detail
+  const bnames = ['Skala podatkowa','Podatek liniowy',`Ryczałt (${ryczaltRateDisplay})`];
+  const bdata = [
+    { ...s, total: sTotal, net: sNet, rows: [
+      ['Przychód',fmt(rev)],['Koszty uzyskania',`− ${fmt(costs)}`],['Dochód',fmt(s.dochod)],
+      ['Odliczenie ZUS',`− ${fmt(s.zus)}`],['Podstawa PIT',fmt(Math.max(0,s.dochod-s.zus))],
+      ['Podatek dochodowy',fmt(s.pit)],['Składka zdrowotna',fmt(s.health)],['ZUS społeczne',fmt(s.zus)],
+    ]},
+    { ...l, total: lTotal, net: lNet, rows: [
+      ['Przychód',fmt(rev)],['Koszty uzyskania',`− ${fmt(costs)}`],['Dochód',fmt(l.dochod)],
+      ['Podstawa PIT (po ZUS)',fmt(Math.max(0,l.dochod-l.zus))],
+      ['Podatek dochodowy (19%)',fmt(l.pit)],['Składka zdrowotna (4,9%)',fmt(l.health)],['ZUS społeczne',fmt(l.zus)],
+    ]},
+    { ...r, total: rTotal, net: rNet, rows: [
+      ['Przychód (podstawa ryczałtu)',fmt(rev)],['Koszty — nie dotyczy','brak odliczenia'],
+      [`Podatek ryczałtowy (${ryczaltRateDisplay})`,fmt(r.pit)],['Składka zdrowotna (próg)',fmt(r.health)],['ZUS społeczne',fmt(r.zus)],
+    ]},
+  ];
+  document.getElementById('breakdown-detail').innerHTML = bdata.map((d,i) => `
+    <div class="breakdown-mini" style="${isW(i)?'border-color:rgba(201,168,76,.3)':''}">
+      <h4>${bnames[i]} ${isW(i)?'<span class="winner-badge">✓ najlepsza</span>':''}</h4>
+      ${d.rows.map(([k,v]) => `<div class="bm-row"><span>${k}</span><span>${v}</span></div>`).join('')}
+      <div class="bm-row" style="color:${isW(i)?'var(--green)':'var(--red)'}"><span><strong>Łączny koszt roczny</strong></span><span><strong>${fmt(d.total)}</strong></span></div>
+      <div class="bm-row"><span><strong>Do kieszeni (rocznie)</strong></span><span style="color:var(--gold)"><strong>${fmt(d.net)}</strong></span></div>
+    </div>`).join('');
+}
+
+function showTab(tab, btn) {
+  ['annual','monthly','breakdown'].forEach(t => document.getElementById('tab-'+t).style.display = t===tab?'block':'none');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function syncRange(field) {
+  document.getElementById(field).value = document.getElementById('r-'+field).value;
+  calculate();
+}
+
+function syncInput(field) {
+  const v = parseFloat(document.getElementById(field).value);
+  const range = document.getElementById('r-'+field);
+  if (range) range.value = Math.min(Math.max(v, range.min), range.max);
+  calculate();
+}
+
+['revenue','costs'].forEach(f => {
+  document.getElementById(f).addEventListener('input', () => syncInput(f));
+});
+
+calculate();
+</script>
+</body>
+</html>

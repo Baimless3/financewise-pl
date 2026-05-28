@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprawdzarka gotowości KSeF 2026 — Regulatora</title>
+<meta name="description" content="Czy Twoja firma jest gotowa na KSeF? Odpowiedz na 8 pytań i otrzymaj spersonalizowany plan działania.">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+.quiz-wrap{max-width:720px;margin:0 auto;padding:3rem clamp(1rem,4vw,3rem)}
+.progress-bar-wrap{margin-bottom:2.5rem}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.progress-meta span{font-size:12px;color:var(--text3)}
+.progress-meta strong{font-size:12px;color:var(--gold)}
+.progress-track{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s var(--ease)}
+.step-indicator{display:flex;gap:6px;margin-top:8px}
+.step-dot{width:6px;height:6px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);transition:all .3s}
+.step-dot.done{background:var(--gold);border-color:var(--gold)}
+.step-dot.current{background:transparent;border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,168,76,.2)}
+
+.question-block{animation:qin .3s var(--ease) both}
+@keyframes qin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.question-num{font-size:11px;color:var(--gold);font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem}
+.question-text{font-family:var(--ff-display);font-size:clamp(1.4rem,3vw,2rem);line-height:1.25;margin-bottom:.6rem}
+.question-sub{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:2rem;max-width:560px}
+.options-grid{display:flex;flex-direction:column;gap:10px}
+.option-btn{
+  display:flex;align-items:center;gap:14px;
+  padding:1rem 1.2rem;border-radius:4px;
+  background:var(--bg2);border:1px solid var(--border2);
+  cursor:pointer;text-align:left;transition:all .2s var(--ease);
+  font-family:var(--ff-body);
+}
+.option-btn:hover{border-color:rgba(201,168,76,.4);background:var(--gold-bg)}
+.option-btn.selected{border-color:var(--gold);background:var(--gold-bg)}
+.option-icon{width:38px;height:38px;border-radius:6px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:border-color .2s}
+.option-btn.selected .option-icon{border-color:rgba(201,168,76,.4)}
+.option-content h4{font-size:14px;font-weight:500;margin-bottom:2px;font-family:var(--ff-body)}
+.option-content p{font-size:12px;color:var(--text2);line-height:1.4}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.btn-back{font-size:13px;color:var(--text3);display:flex;align-items:center;gap:4px;cursor:pointer;background:none;border:none;font-family:var(--ff-body);transition:color .2s}
+.btn-back:hover{color:var(--text2)}
+
+/* RESULTS */
+.result-block{animation:qin .5s var(--ease) both}
+.result-score-ring{
+  width:120px;height:120px;border-radius:50%;margin:0 auto 1.5rem;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  font-family:var(--ff-display);font-size:2.2rem;font-weight:700;
+  position:relative;
+}
+.result-score-ring.good{background:var(--green-bg);border:2px solid rgba(78,155,111,.4);color:var(--green)}
+.result-score-ring.med{background:var(--gold-bg);border:2px solid rgba(201,168,76,.4);color:var(--gold)}
+.result-score-ring.bad{background:var(--red-bg);border:2px solid rgba(200,75,58,.4);color:var(--red)}
+.result-score-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+.result-title{font-family:var(--ff-display);font-size:clamp(1.6rem,3vw,2.2rem);text-align:center;margin-bottom:.6rem}
+.result-desc{font-size:14px;color:var(--text2);text-align:center;line-height:1.7;max-width:540px;margin:0 auto 2rem}
+.action-list{display:flex;flex-direction:column;gap:10px;margin-bottom:2rem}
+.action-item{display:flex;align-items:flex-start;gap:12px;padding:1rem 1.2rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px}
+.action-item.urgent{border-left:3px solid var(--red);border-left-width:3px}
+.action-item.medium{border-left:3px solid var(--gold)}
+.action-item.done-item{border-left:3px solid var(--green)}
+.action-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
+.action-num.u{background:var(--red-bg);color:var(--red)}
+.action-num.m{background:var(--gold-bg);color:var(--gold)}
+.action-num.d{background:var(--green-bg);color:var(--green)}
+.action-body h5{font-size:13px;font-weight:500;margin-bottom:3px;font-family:var(--ff-body)}
+.action-body p{font-size:12px;color:var(--text2);line-height:1.5}
+.result-tools{border:1px solid var(--border);border-radius:6px;padding:1.4rem;background:var(--bg2);margin-bottom:1.5rem}
+.result-tools h4{font-size:13px;font-weight:500;margin-bottom:.8rem;font-family:var(--ff-body)}
+.tool-mini{display:flex;align-items:center;gap:10px;padding:.6rem 0;border-bottom:1px solid var(--border)}
+.tool-mini:last-child{border-bottom:none}
+.tool-mini-logo{width:30px;height:30px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--ff-display);flex-shrink:0}
+.tool-mini-info h5{font-size:12px;font-weight:500;font-family:var(--ff-body)}
+.tool-mini-info p{font-size:11px;color:var(--text3)}
+.tool-mini-link{margin-left:auto;font-size:11px;color:var(--gold);white-space:nowrap}
+.result-cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.deadline-banner{background:var(--red-bg);border:1px solid rgba(200,75,58,.3);border-radius:4px;padding:.8rem 1.2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:10px}
+.deadline-banner strong{font-size:13px;font-weight:500}
+.deadline-banner p{font-size:12px;color:var(--text2);margin-top:2px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>Regulatora</a>
+    <nav class="nav-links">
+      <a href="podatki.html">Podatki</a>
+      <a href="zus.html">ZUS</a>
+      <a href="ksef.html" class="active">KSeF</a>
+      <a href="prawo-pracy.html">Prawo pracy</a>
+      <a href="narzedzia.html">Narzędzia</a>
+      <a href="index.html#newsletter" class="nav-cta">Newsletter →</a>
+    </nav>
+    <div class="nav-right"><div class="nav-alert">KSeF · 01.02.2026</div></div>
+  </div>
+</nav>
+
+<div style="max-width:720px;margin:0 auto;padding:1.5rem clamp(1rem,4vw,3rem) 0">
+  <div class="breadcrumb"><a href="index.html">Strona główna</a><span>›</span><a href="ksef.html">KSeF</a><span>›</span><span>Sprawdzarka gotowości</span></div>
+</div>
+
+<div class="quiz-wrap" id="quiz-container">
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap" id="progress-wrap">
+    <div class="progress-meta">
+      <span>Pytanie <strong id="q-num">1</strong> z 8</span>
+      <strong id="q-pct">12%</strong>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:12%"></div></div>
+    <div class="step-indicator" id="step-dots"></div>
+  </div>
+
+  <!-- QUESTION AREA -->
+  <div id="question-area"></div>
+
+  <!-- NAV -->
+  <div class="quiz-nav" id="quiz-nav">
+    <button class="btn-back" id="btn-back" onclick="goBack()">← Wróć</button>
+    <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>Dalej →</button>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-col"><div class="footer-logo"><span style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>Regulatora</div><p>Niezależny serwis monitorowania zmian prawno-podatkowych dla polskich przedsiębiorców.</p></div>
+    <div class="footer-col"><h5>Kategorie</h5><ul class="footer-links"><li><a href="zus.html">ZUS i składki</a></li><li><a href="podatki.html">Podatek dochodowy</a></li><li><a href="ksef.html">KSeF</a></li><li><a href="prawo-pracy.html">Prawo pracy</a></li></ul></div>
+    <div class="footer-col"><h5>Kalkulatory</h5><ul class="footer-links"><li><a href="kalkulator-zus.html">Kalkulator ZUS 2025</a></li><li><a href="kalkulator-ksef.html">Gotowość na KSeF</a></li><li><a href="kalkulator-podatki.html">Formy opodatkowania</a></li></ul></div>
+    <div class="footer-col"><h5>Informacje</h5><ul class="footer-links"><li><a href="#">O serwisie</a></li><li><a href="#">Polityka prywatności</a></li><li><a href="#">Kontakt</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 Regulatora / FinanceWise.pl</p><p class="footer-disclaimer">Treści informacyjne. Nie stanowią porady prawnej ani podatkowej.</p></div>
+</footer>
+
+<script>
+const QUESTIONS = [
+  {
+    id:'vat', num:1,
+    text:'Jaki jest Twój status VAT?',
+    sub:'To wyznacza czy KSeF dotyczy Cię bezpośrednio, czy tylko pośrednio jako odbiorcy faktur.',
+    options:[
+      {icon:'💳', label:'Czynny podatnik VAT', desc:'Wystawiasz faktury VAT regularnie', value:2},
+      {icon:'🔖', label:'Zwolniony z VAT (podmiotowo)', desc:'Obrót poniżej 200 000 zł lub działalność zwolniona', value:1},
+      {icon:'🏠', label:'Nie prowadzę działalności VAT', desc:'B2C, rolnik ryczałtowy lub inna forma', value:0},
+    ]
+  },
+  {
+    id:'turnover', num:2,
+    text:'Jaki był Twój obrót w 2024 roku?',
+    sub:'Decyduje o terminie obowiązkowego KSeF — od 1.02.2026 dla firm +2M PLN, od 1.04.2026 dla pozostałych.',
+    options:[
+      {icon:'🏭', label:'Powyżej 2 mln zł', desc:'Obowiązek KSeF od 1 lutego 2026 — najpilniejszy termin', value:3},
+      {icon:'🏢', label:'Od 200 tys. do 2 mln zł', desc:'Obowiązek od 1 kwietnia 2026', value:2},
+      {icon:'🏪', label:'Poniżej 200 tys. zł', desc:'Obowiązek od 1 kwietnia 2026 (lub zwolniony z VAT)', value:1},
+    ]
+  },
+  {
+    id:'software', num:3,
+    text:'Jak aktualnie wystawiasz faktury?',
+    sub:'Kluczowe pytanie — program musi obsługiwać API KSeF żeby automatycznie wysyłać faktury do systemu MF.',
+    options:[
+      {icon:'🤖', label:'Programem z integracją KSeF', desc:'np. inFakt, wFirma, Fakturownia — API gotowe', value:3},
+      {icon:'💻', label:'Programem bez integracji KSeF', desc:'Wystawia faktury, ale nie wysyła do KSeF', value:1},
+      {icon:'📊', label:'Ręcznie, Excel lub Word', desc:'Żadnego dedykowanego oprogramowania', value:0},
+    ]
+  },
+  {
+    id:'accountant', num:4,
+    text:'Czy Twoje biuro rachunkowe jest przygotowane na KSeF?',
+    sub:'Biuro rachunkowe będzie musiało mieć dostęp do Twoich faktur w KSeF lub Twoje oprogramowanie musi samo to obsługiwać.',
+    options:[
+      {icon:'✅', label:'Tak — biuro potwierdza gotowość', desc:'Używają oprogramowania z integracją KSeF', value:2},
+      {icon:'❓', label:'Nie wiem — nie rozmawiałem o tym', desc:'Temat nie był jeszcze poruszany', value:0},
+      {icon:'🏠', label:'Prowadzę księgowość samodzielnie', desc:'Sam obsługuję wszystko w programie', value:1},
+      {icon:'❌', label:'Biuro nie wie co to KSeF', desc:'Nie są przygotowani ani zainteresowani', value:-1},
+    ]
+  },
+  {
+    id:'auth', num:5,
+    text:'Czy masz token KSeF lub podpis elektroniczny?',
+    sub:'Do korzystania z KSeF potrzebujesz tokenu API lub kwalifikowanego podpisu / Profilu Zaufanego.',
+    options:[
+      {icon:'🔑', label:'Mam token KSeF (API)', desc:'Wygenerowany w bramce produkcyjnej MF', value:3},
+      {icon:'📜', label:'Mam kwalifikowany podpis lub ePUAP', desc:'Mogę się zalogować do KSeF', value:2},
+      {icon:'👤', label:'Mam tylko Profil Zaufany', desc:'Podstawowy dostęp — wystarczy na start', value:1},
+      {icon:'🚫', label:'Nie mam żadnego z powyższych', desc:'Trzeba to załatwić jak najszybciej', value:0},
+    ]
+  },
+  {
+    id:'foreign', num:6,
+    text:'Czy wystawiasz faktury dla zagranicznych kontrahentów?',
+    sub:'Faktury eksportowe (WDT, eksport towarów) i dla nabywców bez polskiego NIP na razie są wyłączone z obowiązku KSeF.',
+    options:[
+      {icon:'🌍', label:'Tak — głównie faktury zagraniczne', desc:'Większość moich faktur to eksport lub UE', value:2},
+      {icon:'🔀', label:'Mieszane — krajowe i zagraniczne', desc:'Około połowy krajowych, połowy zagranicznych', value:1},
+      {icon:'🇵🇱', label:'Nie — tylko faktury krajowe', desc:'Wszyscy kontrahenci mają polskie NIP-y', value:0},
+    ]
+  },
+  {
+    id:'knowledge', num:7,
+    text:'Jak dobrze znasz przepisy i zasady działania KSeF?',
+    sub:'Wiesz jak wygląda proces wysyłki, co to numer KSeF faktury i jak działa UPO (Urzędowe Poświadczenie Odbioru)?',
+    options:[
+      {icon:'🎓', label:'Znam dobrze — czytałem przepisy', desc:'Wiem co to UPO, numer KSeF, tokeny dostępu', value:2},
+      {icon:'📖', label:'Słyszałem, ale nie zagłębiałem się', desc:'Ogólna wiedza, nie szczegóły techniczne', value:1},
+      {icon:'🤷', label:'Nie wiem prawie nic', desc:'Temat KSeF jest dla mnie nowy', value:0},
+    ]
+  },
+  {
+    id:'test', num:8,
+    text:'Czy testowałeś wystawianie faktur w środowisku testowym KSeF?',
+    sub:'MF udostępnia środowisko testowe (demo.ksef.mf.gov.pl) gdzie można sprawdzić integrację bez konsekwencji.',
+    options:[
+      {icon:'🧪', label:'Tak — testowałem i działa', desc:'Faktury testowe przeszły pomyślnie', value:3},
+      {icon:'🔄', label:'Jestem w trakcie testowania', desc:'Trwają prace integracyjne lub testy', value:2},
+      {icon:'📋', label:'Planujemy ale jeszcze nie zaczęliśmy', desc:'Temat jest na liście do zrobienia', value:1},
+      {icon:'❌', label:'Nie — nic nie testowałem', desc:'Brak jakichkolwiek działań', value:0},
+    ]
+  },
+];
+
+let current = 0;
+let answers = {};
+let selectedValue = null;
+
+function buildDots() {
+  const wrap = document.getElementById('step-dots');
+  wrap.innerHTML = QUESTIONS.map((q,i) => `<div class="step-dot ${i===0?'current':''}" id="dot-${i}"></div>`).join('');
+}
+
+function updateProgress(idx) {
+  const pct = Math.round(((idx+1)/QUESTIONS.length)*100);
+  document.getElementById('q-num').textContent = idx+1;
+  document.getElementById('q-pct').textContent = pct+'%';
+  document.getElementById('progress-fill').style.width = pct+'%';
+  QUESTIONS.forEach((_,i) => {
+    const d = document.getElementById('dot-'+i);
+    if(!d) return;
+    d.className = 'step-dot' + (i < idx ? ' done' : i===idx ? ' current' : '');
+  });
+}
+
+function renderQuestion(idx) {
+  const q = QUESTIONS[idx];
+  selectedValue = null;
+  document.getElementById('btn-next').disabled = true;
+  updateProgress(idx);
+
+  const area = document.getElementById('question-area');
+  area.innerHTML = `
+    <div class="question-block">
+      <div class="question-num">Pytanie ${q.num} z ${QUESTIONS.length}</div>
+      <h2 class="question-text">${q.text}</h2>
+      <p class="question-sub">${q.sub}</p>
+      <div class="options-grid">
+        ${q.options.map((o,i) => `
+          <button class="option-btn" onclick="selectOption(this, ${o.value})" data-val="${o.value}">
+            <div class="option-icon">${o.icon}</div>
+            <div class="option-content">
+              <h4>${o.label}</h4>
+              <p>${o.desc}</p>
+            </div>
+          </button>
+        `).join('')}
+      </div>
+    </div>`;
+
+  const btnNext = document.getElementById('btn-next');
+  btnNext.textContent = idx === QUESTIONS.length-1 ? 'Zobacz wyniki →' : 'Dalej →';
+  document.getElementById('btn-back').style.visibility = idx === 0 ? 'hidden' : 'visible';
+}
+
+function selectOption(el, val) {
+  el.closest('.options-grid').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedValue = val;
+  document.getElementById('btn-next').disabled = false;
+}
+
+function goNext() {
+  if (selectedValue === null) return;
+  answers[QUESTIONS[current].id] = selectedValue;
+  current++;
+  if (current >= QUESTIONS.length) { showResults(); return; }
+  renderQuestion(current);
+}
+
+function goBack() {
+  if (current === 0) return;
+  current--;
+  renderQuestion(current);
+}
+
+function getScore() {
+  return Object.values(answers).reduce((s,v) => s + Math.max(0,v), 0);
+}
+
+function showResults() {
+  const score = getScore();
+  const maxScore = 18; // sum of max per question
+  const pct = Math.round((score/maxScore)*100);
+
+  const turnover = answers.turnover || 1;
+  const urgentDeadline = turnover === 3;
+  const software = answers.software || 0;
+  const auth = answers.auth || 0;
+  const test = answers.test || 0;
+
+  let level, title, desc, colorClass;
+  if (pct >= 70) {
+    level='good'; colorClass='good';
+    title='Jesteś dobrze przygotowany na KSeF';
+    desc='Twoja firma ma solidne podstawy pod integrację z KSeF. Kilka kroków jeszcze do dopięcia, ale nic krytycznego — działaj według planu poniżej.';
+  } else if (pct >= 40) {
+    level='med'; colorClass='med';
+    title='Jesteś częściowo przygotowany — działaj teraz';
+    desc='Masz już część elementów, ale brakuje kluczowych kroków przed obowiązkowym terminem. Każdy miesiąc opóźnienia to większy stres przed deadlinem.';
+  } else {
+    level='bad'; colorClass='bad';
+    title='Pilnie zacznij przygotowania do KSeF';
+    desc='Twoja firma wymaga szybkich działań — zarówno technicznych, jak i proceduralnych. Termin zbliża się nieubłaganie, a integracje trwają.';
+  }
+
+  // Build action items
+  const actions = [];
+  if (auth === 0) actions.push({type:'u', title:'Załóż konto i wygeneruj token KSeF', desc:'Zaloguj się na ksef.mf.gov.pl przez ePUAP lub kwalifikowany podpis, wygeneruj token API dla siebie lub biura rachunkowego.'});
+  if (software === 0) actions.push({type:'u', title:'Wybierz oprogramowanie z integracją KSeF', desc:'inFakt, wFirma lub Fakturownia obsługują KSeF natywnie. Migracja z Excela zajmuje 1–2 tygodnie.'});
+  if (software === 1) actions.push({type:'u', title:'Zaktualizuj oprogramowanie lub zmień dostawcę', desc:'Sprawdź czy Twój dostawca ma w planie integrację KSeF i kiedy. Jeśli nie — czas na zmianę.'});
+  if (answers.accountant === 0 || answers.accountant === -1) actions.push({type:'u', title:'Porozmawiaj z biurem rachunkowym o KSeF', desc:'Biuro musi mieć dostęp do Twoich faktur w KSeF — omów jak to zorganizować i czy używają odpowiedniego oprogramowania.'});
+  if (test === 0 || test === 1) actions.push({type:'m', title:'Przeprowadź testy w środowisku testowym MF', desc:'Skorzystaj z demo.ksef.mf.gov.pl — przetestuj wystawianie faktur i upewnij się że integracja działa zanim wejdzie obowiązek.'});
+  if (answers.knowledge <= 1) actions.push({type:'m', title:'Zapoznaj się z podstawami KSeF', desc:'Przeczytaj nasz przewodnik KSeF i zrozum co to UPO, numer KSeF, tokeny — kluczowe pojęcia do sprawnego działania.'});
+  if (actions.length === 0) actions.push({type:'d', title:'Monitoruj aktualizacje przepisów', desc:'KSeF to żywy projekt — MF regularnie publikuje aktualizacje techniczne. Zapisz się na nasz newsletter.'});
+  actions.push({type:'d', title:'Zapisz się na newsletter alertów KSeF', desc:'Otrzymuj powiadomienia o zmianach technicznych, nowych wersjach API i terminach z wyprzedzeniem.'});
+
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('quiz-nav').style.display = 'none';
+
+  document.getElementById('question-area').innerHTML = `
+    <div class="result-block">
+      ${urgentDeadline ? `<div class="deadline-banner">
+        <span style="font-size:20px">⚠️</span>
+        <div><strong>Twój termin: 1 lutego 2026</strong><p>Dla firm z obrotem powyżej 2 mln zł — najwcześniejszy obowiązkowy termin.</p></div>
+      </div>` : ''}
+      <div class="result-score-ring ${colorClass}">
+        <span>${pct}%</span>
+        <span class="result-score-label">gotowość</span>
+      </div>
+      <h2 class="result-title">${title}</h2>
+      <p class="result-desc">${desc}</p>
+      <div style="font-size:12px;color:var(--text3);text-align:center;margin-bottom:1.5rem">Wynik: ${score}/${maxScore} pkt · ${actions.filter(a=>a.type==='u').length} działań pilnych</div>
+
+      <div style="font-size:13px;font-weight:500;margin-bottom:.8rem;color:var(--text2)">Twój plan działania</div>
+      <div class="action-list">
+        ${actions.map((a,i) => `
+          <div class="action-item ${a.type==='u'?'urgent':a.type==='m'?'medium':'done-item'}">
+            <div class="action-num ${a.type}">${a.type==='u'?'!':a.type==='m'?i+1:'✓'}</div>
+            <div class="action-body"><h5>${a.title}</h5><p>${a.desc}</p></div>
+          </div>`).join('')}
+      </div>
+
+      <div class="result-tools">
+        <h4>Oprogramowanie gotowe na KSeF <span class="affiliate-note">link partnerski</span></h4>
+        <div class="tool-mini">
+          <div class="tool-mini-logo" style="background:#1A2A1A;color:#4E9B6F">iF</div>
+          <div class="tool-mini-info"><h5>inFakt</h5><p>Pełna integracja KSeF · od 49 zł/mies.</p></div>
+          <a href="#" class="tool-mini-link">Sprawdź →</a>
+        </div>
+        <div class="tool-mini">
+          <div class="tool-mini-logo" style="background:#1A1A2A;color:#4A7EC7">wF</div>
+          <div class="tool-mini-info"><h5>wFirma</h5><p>KSeF + JPK + ZUS · 30 dni gratis</p></div>
+          <a href="#" class="tool-mini-link">Sprawdź →</a>
+        </div>
+        <div class="tool-mini">
+          <div class="tool-mini-logo" style="background:#2A1A1A;color:#C84B3A">Fa</div>
+          <div class="tool-mini-info"><h5>Fakturownia</h5><p>KSeF · API · integracje · start za darmo</p></div>
+          <a href="#" class="tool-mini-link">Sprawdź →</a>
+        </div>
+      </div>
+
+      <div class="result-cta-row">
+        <a href="ksef.html" class="btn btn-primary">Czytaj przewodnik KSeF →</a>
+        <button class="btn btn-ghost" onclick="restart()">Zrób quiz ponownie</button>
+        <a href="kalkulator-zus.html" class="btn btn-ghost">Kalkulator ZUS →</a>
+      </div>
+    </div>`;
+}
+
+function restart() {
+  current = 0; answers = {}; selectedValue = null;
+  document.getElementById('progress-wrap').style.display = 'block';
+  document.getElementById('quiz-nav').style.display = 'flex';
+  buildDots();
+  renderQuestion(0);
+}
+
+buildDots();
+renderQuestion(0);
+</script>
+</body>
+</html>

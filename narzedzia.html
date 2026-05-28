@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator ZUS 2025 — Regulatora</title>
+<meta name="description" content="Oblicz składki ZUS 2025 dla JDG: preferencyjne, pełne, Mały ZUS Plus. Składka zdrowotna na skali, liniowym i ryczałcie. Aktualne stawki.">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+.calc-layout{display:grid;grid-template-columns:400px 1fr;min-height:calc(100vh - 94px)}
+.calc-form{border-right:1px solid var(--border);padding:2rem;display:flex;flex-direction:column;gap:1.4rem;background:var(--bg2)}
+.calc-results{padding:2rem;overflow-y:auto}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:var(--text2);letter-spacing:.04em}
+.field select,.field input[type=number]{
+  background:var(--bg3);border:1px solid var(--border2);border-radius:3px;
+  padding:9px 12px;font-size:14px;color:var(--text);font-family:var(--ff-body);
+  outline:none;transition:border-color 200ms;width:100%;
+  -webkit-appearance:none;appearance:none;
+}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239B9489' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.field select:focus,.field input:focus{border-color:rgba(201,168,76,.5)}
+.field-hint{font-size:11px;color:var(--text3);line-height:1.4}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid var(--border)}
+.toggle-label{font-size:13px;color:var(--text2)}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--bg3);border:1px solid var(--border2);border-radius:11px;cursor:pointer;transition:background 200ms}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:2px;top:2px;background:var(--text3);border-radius:50%;transition:transform 200ms,background 200ms}
+.toggle input:checked+.toggle-slider{background:var(--gold-bg);border-color:rgba(201,168,76,.4)}
+.toggle input:checked+.toggle-slider::before{transform:translateX(18px);background:var(--gold)}
+.results-header{margin-bottom:1.5rem}
+.results-header h2{font-size:1.5rem;margin-bottom:.4rem}
+.results-header p{font-size:13px;color:var(--text2)}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
+.res-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.2rem}
+.res-card.highlight{border-color:rgba(201,168,76,.35);background:var(--gold-bg)}
+.res-card-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.res-card-val{font-family:var(--ff-display);font-size:1.8rem;font-weight:700}
+.res-card-val.gold{color:var(--gold)}
+.res-card-val.red{color:var(--red)}
+.res-card-sub{font-size:11px;color:var(--text3);margin-top:3px}
+.breakdown{border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem}
+.breakdown-header{padding:.8rem 1.2rem;background:var(--bg3);border-bottom:1px solid var(--border);font-size:12px;font-weight:500;color:var(--text2);letter-spacing:.06em;text-transform:uppercase}
+.breakdown-row{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);transition:background 150ms}
+.breakdown-row:last-child{border-bottom:none}
+.breakdown-row:hover{background:rgba(255,255,255,.02)}
+.breakdown-row.total{background:var(--bg3);border-top:1px solid var(--border2)}
+.breakdown-name{font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px}
+.breakdown-name strong{color:var(--text);font-weight:500}
+.breakdown-rate{font-size:11px;color:var(--text3);background:rgba(255,255,255,.05);padding:1px 6px;border-radius:2px}
+.breakdown-amount{font-size:14px;font-weight:500;color:var(--text)}
+.breakdown-amount.zero{color:var(--text3)}
+.breakdown-amount.accent{color:var(--gold)}
+.badge-opt{font-size:9px;background:var(--blue-bg);color:var(--blue);border:1px solid rgba(74,126,199,.2);padding:1px 5px;border-radius:2px;letter-spacing:.04em;text-transform:uppercase}
+.badge-opt.off{background:rgba(255,255,255,.05);color:var(--text3);border-color:var(--border)}
+.annual-box{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:1.2rem;display:flex;justify-content:space-between;align-items:center}
+.annual-box-left h4{font-size:13px;font-weight:500;margin-bottom:3px}
+.annual-box-left p{font-size:12px;color:var(--text3)}
+.annual-val{font-family:var(--ff-display);font-size:1.6rem;font-weight:700;color:var(--red)}
+.disclaimer{font-size:11px;color:var(--text3);line-height:1.6;padding:1rem;background:var(--bg3);border-radius:4px;margin-top:1rem;border:1px solid var(--border)}
+.calc-title-bar{padding:1.5rem 2rem;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:space-between}
+.calc-title-bar h1{font-size:1.2rem}
+.calc-title-bar p{font-size:12px;color:var(--text3)}
+.section-divider{padding:.8rem 0;border-top:1px solid var(--border);margin-top:.4rem}
+.section-divider span{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
+@media(max-width:900px){
+  .calc-layout{grid-template-columns:1fr}
+  .calc-form{border-right:none;border-bottom:1px solid var(--border)}
+  .results-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:500px){.results-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>Regulatora</a>
+    <nav class="nav-links">
+      <a href="podatki.html">Podatki</a>
+      <a href="zus.html">ZUS</a>
+      <a href="ksef.html">KSeF</a>
+      <a href="prawo-pracy.html">Prawo pracy</a>
+      <a href="narzedzia.html" class="active">Narzędzia</a>
+      <a href="index.html#newsletter" class="nav-cta">Newsletter →</a>
+    </nav>
+    <div class="nav-right"><div class="nav-alert">Dane aktualne na 2025</div></div>
+  </div>
+</nav>
+
+<div class="calc-title-bar">
+  <div>
+    <div class="breadcrumb" style="margin-bottom:.4rem">
+      <a href="index.html">Strona główna</a><span>›</span>
+      <a href="narzedzia.html">Narzędzia</a><span>›</span>
+      <span>Kalkulator ZUS 2025</span>
+    </div>
+    <h1>Kalkulator składek ZUS 2025</h1>
+  </div>
+  <p style="font-size:12px;color:var(--text3);text-align:right">Stawki aktualne<br>od 01.01.2025</p>
+</div>
+
+<div class="calc-layout">
+
+  <!-- FORM -->
+  <div class="calc-form">
+
+    <div class="field">
+      <label for="zus-type">Rodzaj składek ZUS</label>
+      <select id="zus-type">
+        <option value="prefer">Preferencyjne (pierwsze 24 mies.)</option>
+        <option value="full" selected>Pełne ZUS</option>
+        <option value="mzp">Mały ZUS Plus</option>
+      </select>
+      <span class="field-hint" id="zus-type-hint">Podstawa: 60% przeciętnego wynagrodzenia = 4 694,40 zł</span>
+    </div>
+
+    <div class="field" id="mzp-income-field" style="display:none">
+      <label for="mzp-income">Roczny dochód z poprzedniego roku (zł)</label>
+      <input type="number" id="mzp-income" value="72000" min="0" max="200000" step="1000">
+      <span class="field-hint">Mały ZUS Plus: podstawa proporcjonalna do dochodu (30%–60% PPW). Dostępny jeśli dochód ≤ 120 000 zł/rok.</span>
+    </div>
+
+    <div class="field">
+      <label for="tax-form">Forma opodatkowania</label>
+      <select id="tax-form">
+        <option value="skala">Skala podatkowa (12% / 32%)</option>
+        <option value="liniowy" selected>Podatek liniowy (19%)</option>
+        <option value="ryczalt">Ryczałt ewidencjonowany</option>
+      </select>
+    </div>
+
+    <div class="field" id="income-field">
+      <label for="monthly-income">Miesięczny dochód netto (zł) <span style="color:var(--text3);font-size:10px" id="income-label-hint">— po kosztach, przed podatkiem</span></label>
+      <input type="number" id="monthly-income" value="8000" min="0" step="500">
+      <span class="field-hint" id="health-basis-hint">Składka zdrowotna: 4,9% od dochodu (liniowy)</span>
+    </div>
+
+    <div class="field" id="ryczalt-revenue-field" style="display:none">
+      <label for="annual-revenue">Roczny przychód (zł) — dla zdrowotnej na ryczałcie</label>
+      <input type="number" id="annual-revenue" value="120000" min="0" step="10000">
+      <span class="field-hint">Trzy progi: ≤60 tys. / 60–300 tys. / >300 tys. zł</span>
+    </div>
+
+    <div class="section-divider"><span>Opcje dodatkowe</span></div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Ubezpieczenie chorobowe (dobrowolne)</span>
+      <label class="toggle"><input type="checkbox" id="chorobowe" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label">Fundusz Pracy</span>
+      <label class="toggle"><input type="checkbox" id="fp" checked><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="field">
+      <label for="wypadkowa-rate">Stawka wypadkowa (%)</label>
+      <input type="number" id="wypadkowa-rate" value="1.67" min="0.67" max="3.33" step="0.01">
+      <span class="field-hint">Standardowa 1,67%. Zależy od PKD i liczby pracowników.</span>
+    </div>
+
+    <div style="margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)">
+      <p style="font-size:11px;color:var(--text3);line-height:1.5">Wyniki obliczane na bieżąco. Kliknij „Pokaż plan roczny" po prawej aby zobaczyć zestawienie miesięczne.</p>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="calc-results">
+    <div class="results-header">
+      <h2>Twoje składki w <span style="color:var(--gold)" id="result-year">2025</span></h2>
+      <p id="result-subtitle">Pełne ZUS · Podatek liniowy · z chorobowym</p>
+    </div>
+
+    <div class="results-grid">
+      <div class="res-card highlight">
+        <div class="res-card-label">Składki społeczne/mies.</div>
+        <div class="res-card-val gold" id="r-social">—</div>
+        <div class="res-card-sub" id="r-social-sub">bez zdrowotnej</div>
+      </div>
+      <div class="res-card">
+        <div class="res-card-label">Składka zdrowotna/mies.</div>
+        <div class="res-card-val" id="r-health">—</div>
+        <div class="res-card-sub" id="r-health-sub">zależna od dochodu</div>
+      </div>
+      <div class="res-card">
+        <div class="res-card-label">ZUS łącznie/mies.</div>
+        <div class="res-card-val red" id="r-total">—</div>
+        <div class="res-card-sub">społeczne + zdrowotna</div>
+      </div>
+      <div class="res-card">
+        <div class="res-card-label">ZUS łącznie rocznie</div>
+        <div class="res-card-val" id="r-annual">—</div>
+        <div class="res-card-sub">× 12 miesięcy</div>
+      </div>
+    </div>
+
+    <!-- BREAKDOWN -->
+    <div class="breakdown">
+      <div class="breakdown-header">Szczegółowy rozkład składek</div>
+
+      <div class="breakdown-row">
+        <div class="breakdown-name">
+          <strong>Emerytalna</strong>
+          <span class="breakdown-rate">19,52%</span>
+        </div>
+        <div class="breakdown-amount" id="b-emerytalna">—</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-name">
+          <strong>Rentowa</strong>
+          <span class="breakdown-rate">8,00%</span>
+        </div>
+        <div class="breakdown-amount" id="b-rentowa">—</div>
+      </div>
+      <div class="breakdown-row" id="row-chorobowe">
+        <div class="breakdown-name">
+          <strong>Chorobowa</strong>
+          <span class="breakdown-rate">2,45%</span>
+          <span class="badge-opt" id="badge-chorobowe">dobrowolna</span>
+        </div>
+        <div class="breakdown-amount" id="b-chorobowa">—</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-name">
+          <strong>Wypadkowa</strong>
+          <span class="breakdown-rate" id="rate-wypadkowa">1,67%</span>
+        </div>
+        <div class="breakdown-amount" id="b-wypadkowa">—</div>
+      </div>
+      <div class="breakdown-row" id="row-fp">
+        <div class="breakdown-name">
+          <strong>Fundusz Pracy</strong>
+          <span class="breakdown-rate">2,45%</span>
+          <span class="badge-opt" id="badge-fp">dobrowolny</span>
+        </div>
+        <div class="breakdown-amount" id="b-fp">—</div>
+      </div>
+      <div class="breakdown-row" id="row-fs">
+        <div class="breakdown-name">
+          <strong>Fundusz Solidarnościowy</strong>
+          <span class="breakdown-rate">0,10%</span>
+        </div>
+        <div class="breakdown-amount" id="b-fs">—</div>
+      </div>
+      <div class="breakdown-row" style="border-top:1px solid var(--border2)">
+        <div class="breakdown-name" style="font-weight:500;color:var(--text)">Suma składek społecznych</div>
+        <div class="breakdown-amount accent" id="b-social-sum">—</div>
+      </div>
+      <div class="breakdown-row" style="background:var(--red-bg)">
+        <div class="breakdown-name">
+          <strong>Składka zdrowotna</strong>
+          <span class="breakdown-rate" id="rate-health">4,90%</span>
+        </div>
+        <div class="breakdown-amount accent" id="b-health">—</div>
+      </div>
+      <div class="breakdown-row total">
+        <div class="breakdown-name"><strong style="font-size:14px">RAZEM ZUS (mies.)</strong></div>
+        <div class="breakdown-amount accent" id="b-total" style="font-size:16px;font-weight:700">—</div>
+      </div>
+    </div>
+
+    <!-- ANNUAL -->
+    <div class="annual-box">
+      <div class="annual-box-left">
+        <h4>Roczny koszt ZUS</h4>
+        <p>12 pełnych miesięcy składek</p>
+      </div>
+      <div class="annual-val" id="b-annual-total">—</div>
+    </div>
+
+    <!-- BASIS INFO -->
+    <div style="margin-top:1rem;padding:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:4px">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.06em">Podstawa wymiaru składek 2025</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <span style="font-size:12px;color:var(--text2)">Minimalne wynagrodzenie: <strong style="color:var(--text)">4 666 zł</strong></span>
+        <span style="font-size:12px;color:var(--text2)">PPW: <strong style="color:var(--text)">7 824 zł</strong></span>
+        <span style="font-size:12px;color:var(--text2)">Pełna podstawa: <strong style="color:var(--text)">4 694,40 zł</strong></span>
+        <span style="font-size:12px;color:var(--text2)" id="basis-display">Twoja podstawa: <strong style="color:var(--gold)" id="basis-val">4 694,40 zł</strong></span>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      ⚠ Wartości mają charakter orientacyjny. Stawka wypadkowa może się różnić. Składka zdrowotna na skali/liniowym obliczana od faktycznego dochodu (min. 419,94 zł). Na ryczałcie — wg progów przychodowych. Mały ZUS Plus wymaga spełnienia dodatkowych warunków. Skonsultuj się z biurem rachunkowym.
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap">
+      <a href="kalkulator-podatki.html" class="btn btn-ghost" style="font-size:12px">Porównaj formy opodatkowania →</a>
+      <a href="kalkulator-ksef.html" class="btn btn-ghost" style="font-size:12px">Sprawdź gotowość KSeF →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-col">
+      <div class="footer-logo"><span style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>Regulatora</div>
+      <p>Niezależny serwis monitorowania zmian prawno-podatkowych dla polskich przedsiębiorców.</p>
+    </div>
+    <div class="footer-col"><h5>Kategorie</h5><ul class="footer-links"><li><a href="zus.html">ZUS i składki</a></li><li><a href="podatki.html">Podatek dochodowy</a></li><li><a href="ksef.html">KSeF</a></li><li><a href="prawo-pracy.html">Prawo pracy</a></li></ul></div>
+    <div class="footer-col"><h5>Kalkulatory</h5><ul class="footer-links"><li><a href="kalkulator-zus.html">Kalkulator ZUS 2025</a></li><li><a href="kalkulator-ksef.html">Gotowość na KSeF</a></li><li><a href="kalkulator-podatki.html">Formy opodatkowania</a></li></ul></div>
+    <div class="footer-col"><h5>Informacje</h5><ul class="footer-links"><li><a href="#">O serwisie</a></li><li><a href="#">Polityka prywatności</a></li><li><a href="#">Kontakt</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 Regulatora / FinanceWise.pl</p><p class="footer-disclaimer">Treści informacyjne. Nie stanowią porady prawnej ani podatkowej. Serwis zawiera linki partnerskie.</p></div>
+</footer>
+
+<script>
+// ── ZUS 2025 CONSTANTS ──────────────────────────────────────
+const C = {
+  minWage: 4666,
+  ppw: 7824,
+  fullBase: 4694.40,
+  preferBase: 1399.80,
+  rates: {
+    emerytalna: 0.1952,
+    rentowa: 0.0800,
+    chorobowa: 0.0245,
+    wypadkowa: 0.0167,
+    fp: 0.0245,
+    fs: 0.0010,
+  },
+  healthMin: 419.94,
+  // Ryczałt health thresholds (annual)
+  ryczaltHealth: [
+    { limit: 60000, monthly: 419.94 },
+    { limit: 300000, monthly: 699.11 },
+    { limit: Infinity, monthly: 1258.39 },
+  ],
+};
+
+const fmt = v => v.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' zł';
+
+function getMZPBase(annualIncome) {
+  // Mały ZUS Plus: base = 0.5 * (annual_income / 12), capped between prefer and full base
+  let base = (annualIncome / 12) * 0.5;
+  base = Math.max(C.preferBase, Math.min(C.fullBase, base));
+  return Math.round(base * 100) / 100;
+}
+
+function getBase() {
+  const type = document.getElementById('zus-type').value;
+  if (type === 'prefer') return C.preferBase;
+  if (type === 'mzp') {
+    const inc = parseFloat(document.getElementById('mzp-income').value) || 72000;
+    return getMZPBase(inc);
+  }
+  return C.fullBase;
+}
+
+function getHealthInsurance() {
+  const taxForm = document.getElementById('tax-form').value;
+  const monthlyIncome = parseFloat(document.getElementById('monthly-income').value) || 0;
+  const annualRevenue = parseFloat(document.getElementById('annual-revenue').value) || 0;
+
+  if (taxForm === 'skala') {
+    return Math.max(C.healthMin, monthlyIncome * 0.09);
+  }
+  if (taxForm === 'liniowy') {
+    return Math.max(C.healthMin, monthlyIncome * 0.049);
+  }
+  // Ryczałt
+  for (const t of C.ryczaltHealth) {
+    if (annualRevenue <= t.limit) return t.monthly;
+  }
+  return C.ryczaltHealth[2].monthly;
+}
+
+function calculate() {
+  const type = document.getElementById('zus-type').value;
+  const base = getBase();
+  const chorobowe = document.getElementById('chorobowe').checked;
+  const fp = document.getElementById('fp').checked && type !== 'prefer';
+  const wypadkowaRate = parseFloat(document.getElementById('wypadkowa-rate').value) / 100 || C.rates.wypadkowa;
+  const taxForm = document.getElementById('tax-form').value;
+
+  const em = base * C.rates.emerytalna;
+  const re = base * C.rates.rentowa;
+  const ch = chorobowe ? base * C.rates.chorobowa : 0;
+  const wy = base * wypadkowaRate;
+  const fpAmt = fp ? base * C.rates.fp : 0;
+  const fs = type === 'full' ? base * C.rates.fs : 0;
+
+  const socialSum = em + re + ch + wy + fpAmt + fs;
+  const health = getHealthInsurance();
+  const totalMonthly = socialSum + health;
+
+  // Update DOM
+  const set = (id, val, zero=false) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (zero) { el.textContent = '0,00 zł'; el.className = el.className.replace('accent','') + ' zero'; }
+    else { el.textContent = fmt(val); el.className = el.className.replace(' zero',''); }
+  };
+
+  set('r-social', socialSum);
+  set('r-health', health);
+  set('r-total', totalMonthly);
+  set('r-annual', totalMonthly * 12);
+  set('b-emerytalna', em);
+  set('b-rentowa', re);
+  ch > 0 ? set('b-chorobowa', ch) : set('b-chorobowa', 0, true);
+  set('b-wypadkowa', wy);
+  fpAmt > 0 ? set('b-fp', fpAmt) : set('b-fp', 0, true);
+  fs > 0 ? set('b-fs', fs) : set('b-fs', 0, true);
+  set('b-social-sum', socialSum);
+  set('b-health', health);
+  set('b-total', totalMonthly);
+  set('b-annual-total', totalMonthly * 12);
+
+  document.getElementById('r-social-sub').textContent = `podstawa: ${fmt(base)}`;
+  document.getElementById('basis-val').textContent = fmt(base);
+
+  const chorobBadge = document.getElementById('badge-chorobowe');
+  chorobBadge.textContent = chorobowe ? 'włączone' : 'wyłączone';
+  chorobBadge.className = 'badge-opt' + (chorobowe ? '' : ' off');
+
+  const fpBadge = document.getElementById('badge-fp');
+  fpBadge.textContent = fp ? 'włączone' : (type === 'prefer' ? 'nie dotyczy' : 'wyłączone');
+  fpBadge.className = 'badge-opt' + (fp ? '' : ' off');
+
+  // Health rate display
+  const healthRates = { skala: '9,00%', liniowy: '4,90%', ryczalt: 'ryczałt' };
+  document.getElementById('rate-health').textContent = healthRates[taxForm] || '';
+  document.getElementById('rate-wypadkowa').textContent = (wypadkowaRate * 100).toFixed(2).replace('.', ',') + '%';
+
+  // Subtitle
+  const typeNames = { prefer: 'Preferencyjne', full: 'Pełne ZUS', mzp: 'Mały ZUS Plus' };
+  const taxNames = { skala: 'Skala podatkowa', liniowy: 'Podatek liniowy', ryczalt: 'Ryczałt' };
+  document.getElementById('result-subtitle').textContent =
+    `${typeNames[type]} · ${taxNames[taxForm]} · ${chorobowe ? 'z chorobowym' : 'bez chorobowego'}`;
+
+  document.getElementById('r-health-sub').textContent = taxForm === 'ryczalt'
+    ? `próg: ${document.getElementById('annual-revenue').value || 120000} zł/rok`
+    : `min. 419,94 zł`;
+}
+
+// ── EVENT LISTENERS ──────────────────────────────────────────
+['zus-type','tax-form','chorobowe','fp','wypadkowa-rate','monthly-income','annual-revenue','mzp-income']
+  .forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('input', onUpdate); });
+
+function onUpdate() {
+  const type = document.getElementById('zus-type').value;
+  const taxForm = document.getElementById('tax-form').value;
+
+  document.getElementById('mzp-income-field').style.display = type === 'mzp' ? 'flex' : 'none';
+  document.getElementById('ryczalt-revenue-field').style.display = taxForm === 'ryczalt' ? 'flex' : 'none';
+  document.getElementById('income-field').style.display = taxForm === 'ryczalt' ? 'none' : 'flex';
+
+  const hints = { skala: 'Składka zdrowotna: 9% od dochodu (min. 419,94 zł)', liniowy: 'Składka zdrowotna: 4,9% od dochodu (min. 419,94 zł)', ryczalt: '' };
+  document.getElementById('health-basis-hint').textContent = hints[taxForm] || '';
+
+  const typeHints = {
+    prefer: 'Podstawa: 30% minimalnego wynagrodzenia = 1 399,80 zł · Bez FP/FS',
+    full: 'Podstawa: 60% przeciętnego wynagrodzenia = 4 694,40 zł',
+    mzp: 'Podstawa: proporcjonalna do dochodu z ub. roku (30%–60% PPW)'
+  };
+  document.getElementById('zus-type-hint').textContent = typeHints[type] || '';
+
+  // Disable FP for preferential
+  const fpToggle = document.getElementById('fp');
+  fpToggle.disabled = type === 'prefer';
+
+  calculate();
+}
+
+// Initial calculation
+onUpdate();
+</script>
+</body>
+</html>

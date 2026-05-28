@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Regulatora — inteligentny monitoring zmian prawno-podatkowych dla polskich przedsiębiorców. ZUS, podatki, KSeF, prawo pracy — wyjaśniamy co to znaczy dla Twojej firmy.">
+<meta name="keywords" content="KSeF, ZUS 2025, podatki małe firmy, zmiany podatkowe, prawo pracy Polska, inFakt, wFirma">
+<title>Regulatora — Twój radar regulacyjny | FinanceWise.pl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ───────────────────────────────────────────── */
+:root {
+  --bg:        #0B0B09;
+  --bg2:       #111110;
+  --bg3:       #181816;
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(255,255,255,0.14);
+  --text:      #EDE8DF;
+  --text2:     #9B9489;
+  --text3:     #5C5951;
+  --gold:      #C9A84C;
+  --gold2:     #E8C96A;
+  --gold-bg:   rgba(201,168,76,0.10);
+  --red:       #C84B3A;
+  --red-bg:    rgba(200,75,58,0.10);
+  --green:     #4E9B6F;
+  --green-bg:  rgba(78,155,111,0.10);
+  --blue:      #4A7EC7;
+  --blue-bg:   rgba(74,126,199,0.10);
+  --ff-display: 'Playfair Display', Georgia, serif;
+  --ff-body:    'DM Sans', system-ui, sans-serif;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+/* ── RESET ────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--ff-body);
+  font-size:16px;
+  line-height:1.65;
+  font-weight:300;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{border:none;background:none;cursor:pointer;font-family:inherit}
+ul{list-style:none}
+
+/* ── NOISE TEXTURE ──────────────────────────────────────── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ── TYPOGRAPHY ───────────────────────────────────────── */
+h1,h2,h3,h4,h5{font-family:var(--ff-display);font-weight:600;line-height:1.2;letter-spacing:-0.01em}
+.display-xl{font-size:clamp(2.8rem,6vw,5.2rem);line-height:1.05;font-weight:700}
+.display-lg{font-size:clamp(2rem,4vw,3.2rem);line-height:1.1}
+.display-md{font-size:clamp(1.4rem,2.5vw,2rem)}
+.label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-family:var(--ff-body)}
+.body-sm{font-size:13px;line-height:1.6}
+.body-xs{font-size:12px;line-height:1.5}
+
+/* ── LAYOUT ───────────────────────────────────────────── */
+.container{max-width:1200px;margin-inline:auto;padding-inline:clamp(1rem,4vw,3rem)}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1px}
+
+/* ── NAV ──────────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(11,11,9,.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:60px;
+  max-width:1200px;margin-inline:auto;padding-inline:clamp(1rem,4vw,3rem);
+}
+.nav-logo{
+  font-family:var(--ff-display);
+  font-size:1.35rem;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold);
+  display:inline-block;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+.nav-links{display:flex;align-items:center;gap:0;border-left:1px solid var(--border)}
+.nav-links a{
+  padding:0 1.1rem;height:60px;display:flex;align-items:center;
+  font-size:13px;font-weight:400;color:var(--text2);
+  border-right:1px solid var(--border);
+  transition:color var(--transition),background var(--transition);
+}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.nav-cta{
+  background:var(--gold);color:var(--bg)!important;
+  font-weight:500!important;padding-inline:1.2rem!important;
+}
+.nav-cta:hover{background:var(--gold2)!important;color:var(--bg)!important}
+.nav-alert{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--text2);
+  padding:2px 10px;border-radius:20px;
+  background:var(--red-bg);border:1px solid rgba(200,75,58,.25);
+  animation:fadein .5s ease both .3s;
+}
+.nav-alert::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--red);
+  animation:pulse 1.4s infinite;
+}
+
+/* ── TICKER ───────────────────────────────────────────── */
+.ticker{
+  background:var(--bg3);
+  border-bottom:1px solid var(--border);
+  overflow:hidden;height:34px;
+  display:flex;align-items:center;
+}
+.ticker-label{
+  flex-shrink:0;
+  background:var(--gold);color:var(--bg);
+  font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:0 14px;height:100%;display:flex;align-items:center;
+  z-index:1;
+}
+.ticker-track{
+  display:flex;white-space:nowrap;
+  animation:ticker 40s linear infinite;
+  gap:0;
+}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{
+  font-size:12px;color:var(--text2);
+  padding:0 24px;border-right:1px solid var(--border);
+  height:34px;display:flex;align-items:center;gap:8px;
+}
+.ticker-item .up{color:var(--green);font-weight:500}
+.ticker-item .dn{color:var(--red);font-weight:500}
+.ticker-item .nu{color:var(--gold);font-weight:500}
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero{
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 360px;min-height:520px;
+}
+.hero-main{
+  padding:3.5rem clamp(1rem,4vw,3rem);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;
+}
+.hero-tag{
+  font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);padding:3px 10px;border:1px solid rgba(201,168,76,.3);
+  border-radius:2px;
+}
+.hero-date{font-size:12px;color:var(--text3)}
+.hero h1{
+  font-size:clamp(2.4rem,5vw,4.4rem);
+  line-height:1.06;font-weight:700;
+  margin-bottom:1.2rem;
+}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-lead{
+  font-size:1rem;color:var(--text2);line-height:1.7;
+  max-width:600px;margin-bottom:2rem;font-weight:300;
+}
+.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:3px;
+  font-size:13px;font-weight:500;font-family:var(--ff-body);
+  transition:all var(--transition);cursor:pointer;
+  letter-spacing:.02em;
+}
+.btn-primary{background:var(--gold);color:var(--bg)}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.03)}
+.btn-icon{font-size:16px;line-height:1}
+.hero-stats{
+  display:flex;gap:0;margin-top:2.5rem;
+  border-top:1px solid var(--border);padding-top:1.5rem;
+}
+.hero-stat{
+  padding-right:2rem;margin-right:2rem;
+  border-right:1px solid var(--border);
+}
+.hero-stat:last-child{border-right:none}
+.hero-stat-num{
+  font-family:var(--ff-display);font-size:1.8rem;font-weight:700;
+  color:var(--gold);
+}
+.hero-stat-lbl{font-size:11px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:.08em}
+.hero-side{
+  display:flex;flex-direction:column;
+  border-left:1px solid var(--border);
+}
+.hero-side-header{
+  padding:1.2rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.hero-alert-list{flex:1;overflow-y:auto}
+.alert-item{
+  padding:1.1rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+  cursor:pointer;
+}
+.alert-item:hover{background:rgba(255,255,255,.025)}
+.alert-item-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 8px;border-radius:2px;margin-bottom:6px;
+}
+.tag-zus{background:var(--red-bg);color:var(--red);border:1px solid rgba(200,75,58,.2)}
+.tag-ksef{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(74,126,199,.2)}
+.tag-pit{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+.tag-ue{background:var(--green-bg);color:var(--green);border:1px solid rgba(78,155,111,.2)}
+.tag-pp{background:rgba(150,100,200,.12);color:#A070D8;border:1px solid rgba(150,100,200,.2)}
+.alert-item h4{font-size:13px;font-weight:400;line-height:1.45;margin-bottom:4px}
+.alert-item-meta{font-size:11px;color:var(--text3);display:flex;gap:8px}
+.alert-dot{width:5px;height:5px;border-radius:50%;display:inline-block;flex-shrink:0;margin-top:5px}
+.dot-high{background:var(--red)}
+.dot-med{background:var(--gold)}
+.dot-low{background:var(--green)}
+
+/* ── SECTION HEADERS ──────────────────────────────────── */
+.section-header{
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0;
+}
+.section-header-left{
+  display:flex;align-items:center;gap:0;
+}
+.section-tab{
+  padding:1rem clamp(1rem,4vw,3rem);
+  border-right:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.section-tab h2{
+  font-family:var(--ff-display);
+  font-size:1.05rem;font-weight:600;
+}
+.section-header-right{
+  padding-right:clamp(1rem,4vw,3rem);
+}
+.link-more{
+  font-size:12px;color:var(--text3);
+  display:flex;align-items:center;gap:4px;
+  transition:color var(--transition);
+}
+.link-more:hover{color:var(--gold)}
+
+/* ── ARTICLES GRID ────────────────────────────────────── */
+.articles-section{border-bottom:1px solid var(--border)}
+.articles-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+}
+.article-card{
+  padding:1.8rem clamp(1rem,4vw,3rem);
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+  cursor:pointer;
+  display:flex;flex-direction:column;
+}
+.article-card:nth-child(3n){border-right:none}
+.article-card:hover{background:rgba(255,255,255,.02)}
+.article-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.9rem;gap:8px}
+.article-card h3{
+  font-family:var(--ff-display);
+  font-size:1.1rem;line-height:1.3;font-weight:600;
+  margin-bottom:.6rem;
+  transition:color var(--transition);
+}
+.article-card:hover h3{color:var(--gold)}
+.article-card p{font-size:13px;color:var(--text2);line-height:1.6;flex:1}
+.article-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:1.2rem;padding-top:1rem;
+  border-top:1px solid var(--border);
+}
+.article-date{font-size:11px;color:var(--text3)}
+.article-read{
+  font-size:11px;color:var(--gold);
+  display:flex;align-items:center;gap:4px;opacity:0;
+  transition:opacity var(--transition);
+}
+.article-card:hover .article-read{opacity:1}
+.importance-badge{
+  flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;
+}
+.imp-h{background:var(--red-bg);color:var(--red);border:1px solid rgba(200,75,58,.3)}
+.imp-m{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+.imp-l{background:var(--green-bg);color:var(--green);border:1px solid rgba(78,155,111,.3)}
+
+/* ── FEATURED (WIDE) ──────────────────────────────────── */
+.article-wide{
+  grid-column:1/-1;
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--border);
+}
+.article-wide-content{
+  padding:2.5rem clamp(1rem,4vw,3rem);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.article-wide-content h3{
+  font-size:clamp(1.5rem,3vw,2.2rem);
+  line-height:1.15;margin-bottom:.8rem;
+}
+.article-wide-visual{
+  background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  min-height:260px;padding:2rem;
+  position:relative;overflow:hidden;
+}
+.visual-ksef{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  width:100%;
+}
+.ksef-flow{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;color:var(--text3);
+  font-family:var(--ff-body);
+}
+.ksef-box{
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:4px;padding:8px 14px;
+  font-size:12px;font-weight:500;color:var(--text2);
+  white-space:nowrap;
+}
+.ksef-box.active{border-color:var(--gold);color:var(--gold)}
+.ksef-arrow{color:var(--text3);font-size:14px}
+.ksef-date-badge{
+  margin-top:8px;
+  background:var(--red-bg);border:1px solid rgba(200,75,58,.3);
+  border-radius:3px;padding:6px 16px;
+  font-size:12px;color:var(--red);font-weight:500;
+}
+.visual-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:40px 40px;
+}
+
+/* ── TOOLS / AFFILIATE ────────────────────────────────── */
+.tools-section{border-bottom:1px solid var(--border)}
+.tools-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.tool-card{
+  padding:1.6rem;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  transition:background var(--transition);cursor:pointer;
+}
+.tool-card:last-child{border-right:none}
+.tool-card:hover{background:rgba(255,255,255,.02)}
+.tool-logo{
+  width:44px;height:44px;border-radius:8px;
+  background:var(--bg3);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--ff-display);font-size:15px;font-weight:700;
+  margin-bottom:1rem;
+  color:var(--text);
+}
+.tool-card h4{font-size:14px;font-weight:500;margin-bottom:4px;font-family:var(--ff-body)}
+.tool-card p{font-size:12px;color:var(--text2);line-height:1.5;flex:1;margin-bottom:12px}
+.tool-cta{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:500;
+  color:var(--gold);letter-spacing:.03em;
+  transition:gap var(--transition);
+  font-family:var(--ff-body);
+}
+.tool-card:hover .tool-cta{gap:8px}
+.tool-rating{
+  display:flex;align-items:center;gap:4px;
+  font-size:10px;color:var(--text3);margin-bottom:8px;
+}
+.tool-stars{color:var(--gold);font-size:10px;letter-spacing:1px}
+.tool-badge{
+  display:inline-block;
+  font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;margin-bottom:6px;
+  background:var(--gold-bg);color:var(--gold);border:1px solid rgba(201,168,76,.2);
+}
+.tool-badge.new{background:var(--green-bg);color:var(--green);border-color:rgba(78,155,111,.2)}
+
+/* ── NEWSLETTER ───────────────────────────────────────── */
+.newsletter-section{
+  border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:1fr 1fr;
+}
+.newsletter-left{
+  padding:3.5rem clamp(1rem,4vw,3rem);
+  border-right:1px solid var(--border);
+}
+.newsletter-left h2{
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  margin-bottom:.8rem;line-height:1.15;
+}
+.newsletter-left h2 em{font-style:italic;color:var(--gold)}
+.newsletter-left p{font-size:14px;color:var(--text2);line-height:1.7;max-width:480px;margin-bottom:1.8rem}
+.newsletter-form{display:flex;gap:0;max-width:440px}
+.newsletter-input{
+  flex:1;
+  background:var(--bg3);border:1px solid var(--border2);border-right:none;
+  border-radius:3px 0 0 3px;
+  padding:10px 14px;font-size:13px;color:var(--text);
+  font-family:var(--ff-body);outline:none;
+  transition:border-color var(--transition);
+}
+.newsletter-input::placeholder{color:var(--text3)}
+.newsletter-input:focus{border-color:rgba(201,168,76,.4)}
+.newsletter-submit{
+  background:var(--gold);color:var(--bg);
+  border-radius:0 3px 3px 0;padding:10px 20px;
+  font-size:13px;font-weight:500;font-family:var(--ff-body);
+  cursor:pointer;border:none;white-space:nowrap;
+  transition:background var(--transition);
+}
+.newsletter-submit:hover{background:var(--gold2)}
+.newsletter-trust{
+  display:flex;align-items:center;gap:8px;
+  margin-top:12px;font-size:11px;color:var(--text3);
+}
+.newsletter-trust::before{content:'🔒';font-size:11px}
+.newsletter-right{
+  padding:3.5rem clamp(1rem,4vw,3rem);
+  background:var(--bg2);
+}
+.newsletter-perks{display:flex;flex-direction:column;gap:1.2rem}
+.perk{display:flex;align-items:flex-start;gap:14px}
+.perk-icon{
+  width:36px;height:36px;border-radius:6px;flex-shrink:0;
+  background:var(--bg3);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+}
+.perk-text h5{font-size:13px;font-weight:500;margin-bottom:2px;font-family:var(--ff-body)}
+.perk-text p{font-size:12px;color:var(--text2);line-height:1.5}
+.perk-count{
+  background:var(--gold-bg);color:var(--gold);
+  border:1px solid rgba(201,168,76,.2);
+  border-radius:10px;padding:1px 8px;
+  font-size:10px;font-weight:500;margin-left:6px;
+}
+
+/* ── CALCULATORS STRIP ───────────────────────────────── */
+.calc-section{border-bottom:1px solid var(--border)}
+.calc-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.calc-card{
+  padding:1.5rem clamp(.8rem,3vw,2rem);
+  border-right:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:14px;
+  transition:background var(--transition);cursor:pointer;
+}
+.calc-card:last-child{border-right:none}
+.calc-card:hover{background:rgba(255,255,255,.02)}
+.calc-num{
+  font-family:var(--ff-display);
+  font-size:2.4rem;font-weight:700;
+  color:var(--border2);line-height:1;
+  flex-shrink:0;
+}
+.calc-body h4{font-size:14px;font-weight:500;margin-bottom:4px;font-family:var(--ff-body)}
+.calc-body p{font-size:12px;color:var(--text2);line-height:1.5}
+.calc-body .btn-ghost{
+  margin-top:10px;padding:5px 12px;font-size:11px;
+}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+.footer{background:var(--bg2);border-top:1px solid var(--border)}
+.footer-top{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;
+  border-bottom:1px solid var(--border);
+}
+.footer-col{
+  padding:2.5rem clamp(1rem,3vw,2.5rem);
+  border-right:1px solid var(--border);
+}
+.footer-col:last-child{border-right:none}
+.footer-logo{
+  font-family:var(--ff-display);font-size:1.2rem;font-weight:700;
+  display:flex;align-items:center;gap:7px;margin-bottom:.8rem;
+}
+.footer-col p{font-size:13px;color:var(--text3);line-height:1.7;max-width:280px}
+.footer-col h5{
+  font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:1rem;font-family:var(--ff-body);
+}
+.footer-links{display:flex;flex-direction:column;gap:6px}
+.footer-links a{font-size:13px;color:var(--text2);transition:color var(--transition)}
+.footer-links a:hover{color:var(--gold)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem clamp(1rem,4vw,3rem);
+  flex-wrap:wrap;gap:8px;
+}
+.footer-bottom p{font-size:11px;color:var(--text3)}
+.footer-disclaimer{font-size:10px;color:var(--text3);max-width:800px;text-align:center;line-height:1.5}
+.affiliate-note{
+  display:inline-block;
+  font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;
+  background:rgba(255,255,255,.05);color:var(--text3);
+  border:1px solid var(--border);margin-left:4px;
+}
+
+/* ── DIVIDER TAG ─────────────────────────────────────── */
+.divider-tag{
+  display:flex;align-items:center;gap:12px;
+  padding:.6rem clamp(1rem,4vw,3rem);
+  border-bottom:1px solid var(--border);
+  background:var(--bg3);
+}
+.divider-tag span{font-size:11px;color:var(--text3);font-weight:400}
+
+/* ── SCROLL ANIMATIONS ─────────────────────────────── */
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-side{display:none}
+  .articles-grid{grid-template-columns:1fr 1fr}
+  .article-card:nth-child(3n){border-right:1px solid var(--border)}
+  .article-card:nth-child(2n){border-right:none}
+  .article-wide{grid-template-columns:1fr}
+  .article-wide-visual{display:none}
+  .tools-grid{grid-template-columns:1fr 1fr}
+  .tool-card:nth-child(2n){border-right:none}
+  .newsletter-section{grid-template-columns:1fr}
+  .newsletter-right{display:none}
+  .calc-grid{grid-template-columns:1fr}
+  .calc-card{border-right:none;border-bottom:1px solid var(--border)}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .footer-col:nth-child(2n){border-right:none}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .articles-grid{grid-template-columns:1fr}
+  .article-card{border-right:none}
+  .tools-grid{grid-template-columns:1fr}
+  .tool-card{border-right:none;border-bottom:1px solid var(--border)}
+  .hero-stats{flex-direction:column;gap:.8rem}
+  .hero-stat{border-right:none;padding-right:0;margin-right:0;border-bottom:1px solid var(--border);padding-bottom:.8rem}
+  .footer-top{grid-template-columns:1fr}
+  .footer-col{border-right:none}
+}
+
+/* ── ARTICLE CATEGORY ACCENT LINE ─────────────────── */
+.article-card::after{
+  content:'';display:block;
+  width:0;height:2px;
+  background:var(--gold);
+  transition:width .3s ease;
+  margin-top:auto;
+}
+.article-card:hover::after{width:40px}
+
+/* ── TOOLTIP (AFFILIATE) ─────────────────────────── */
+.tooltip-wrap{position:relative;display:inline-block}
+.tooltip{
+  position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:4px;padding:5px 10px;
+  font-size:11px;color:var(--text2);white-space:nowrap;
+  pointer-events:none;opacity:0;transition:opacity .2s;
+}
+.tooltip-wrap:hover .tooltip{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Główna nawigacja">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Regulatora – strona główna">
+      <span class="nav-logo-dot" aria-hidden="true"></span>
+      Regulatora
+    </a>
+    <nav class="nav-links" aria-label="Sekcje serwisu">
+      <a href="podatki.html">Podatki</a>
+      <a href="zus.html">ZUS</a>
+      <a href="ksef.html">KSeF</a>
+      <a href="prawo-pracy.html">Prawo pracy</a>
+      <a href="narzedzia.html">Narzędzia</a>
+      <a href="index.html#newsletter" class="nav-cta btn-icon">Newsletter →</a>
+    </nav>
+    <div class="nav-alert" aria-live="polite" aria-label="Aktualne alerty regulacyjne">
+      2 nowe zmiany ZUS · dziś
+    </div>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker" aria-label="Bieżące zmiany regulacyjne" role="marquee">
+  <div class="ticker-label">ALERT</div>
+  <div class="ticker-track">
+    <div class="ticker-item"><span>ZUS 2025:</span><span class="dn">↑ Składka zdrowotna dla liniowych +8%</span></div>
+    <div class="ticker-item"><span>KSeF:</span><span class="up">Obowiązek od 1 II 2026 · duże firmy</span></div>
+    <div class="ticker-item"><span>Podatek minimalny:</span><span class="nu">Nowe zasady obliczania od I 2025</span></div>
+    <div class="ticker-item"><span>Urlop rodzicielski:</span><span class="up">Zmiany w KP wchodzą IX 2025</span></div>
+    <div class="ticker-item"><span>Ryczałt:</span><span class="nu">Nowe stawki dla IT — sprawdź</span></div>
+    <div class="ticker-item"><span>CIT estoński:</span><span class="up">Rozszerzenie katalogu uprawnionych</span></div>
+    <div class="ticker-item"><span>VAT grupy:</span><span class="dn">Zmiana zasad odliczania od VII 2025</span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item"><span>ZUS 2025:</span><span class="dn">↑ Składka zdrowotna dla liniowych +8%</span></div>
+    <div class="ticker-item"><span>KSeF:</span><span class="up">Obowiązek od 1 II 2026 · duże firmy</span></div>
+    <div class="ticker-item"><span>Podatek minimalny:</span><span class="nu">Nowe zasady obliczania od I 2025</span></div>
+    <div class="ticker-item"><span>Urlop rodzicielski:</span><span class="up">Zmiany w KP wchodzą IX 2025</span></div>
+    <div class="ticker-item"><span>Ryczałt:</span><span class="nu">Nowe stawki dla IT — sprawdź</span></div>
+    <div class="ticker-item"><span>CIT estoński:</span><span class="up">Rozszerzenie katalogu uprawnionych</span></div>
+    <div class="ticker-item"><span>VAT grupy:</span><span class="dn">Zmiana zasad odliczania od VII 2025</span></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-grid">
+
+    <div class="hero-main">
+      <div class="hero-eyebrow">
+        <span class="hero-tag">Inteligencja regulacyjna</span>
+        <span class="hero-date">26 maja 2025 · Aktualizacja dzienna</span>
+      </div>
+      <h1 id="hero-heading">
+        Prawo zmienia się.<br>
+        <em>Ty nie tracisz</em><br>
+        przez niewiedzę.
+      </h1>
+      <p class="hero-lead">
+        Regulatora monitoruje Sejm, ZUS, Ministerstwo Finansów i Dziennik Ustaw — i tłumaczy każdą zmianę na prosty język właściciela firmy. Zero prawniczego żargonu. Tylko to, co musisz wiedzieć i zrobić.
+      </p>
+      <div class="hero-actions">
+        <a href="index.html#newsletter" class="btn btn-primary">
+          <span>Otrzymuj alerty bezpłatnie</span>
+          <span class="btn-icon">→</span>
+        </a>
+        <a href="narzedzia.html" class="btn btn-ghost">Wszystkie przewodniki</a>
+      </div>
+      <div class="hero-stats" role="list" aria-label="Statystyki serwisu">
+        <div class="hero-stat" role="listitem">
+          <div class="hero-stat-num">847</div>
+          <div class="hero-stat-lbl">Artykułów w bazie</div>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <div class="hero-stat-num">12 400</div>
+          <div class="hero-stat-lbl">Subskrybentów alertów</div>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <div class="hero-stat-num">Codziennie</div>
+          <div class="hero-stat-lbl">Nowe przewodniki</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERT SIDEBAR -->
+    <aside class="hero-side" aria-label="Najnowsze alerty regulacyjne">
+      <div class="hero-side-header">
+        <span class="label" style="color:var(--text2)">Ostatnie alerty</span>
+        <span class="label" style="color:var(--text3);font-size:10px">LIVE</span>
+      </div>
+      <ul class="hero-alert-list" role="list">
+
+        <li class="alert-item" role="listitem" tabindex="0">
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <span class="alert-dot dot-high" aria-label="Wysoki priorytet"></span>
+            <div>
+              <div class="alert-item-tag tag-zus">ZUS</div>
+              <h4>Składki zdrowotne 2025: jak obliczyć podstawę na liniowym?</h4>
+              <div class="alert-item-meta">
+                <span>3 godz. temu</span>
+                <span>·</span>
+                <span>Wysoki priorytet</span>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="alert-item" role="listitem" tabindex="0">
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <span class="alert-dot dot-high" aria-label="Wysoki priorytet"></span>
+            <div>
+              <div class="alert-item-tag tag-ksef">KSeF</div>
+              <h4>KSeF obowiązek dla firm +2M PLN obrotu — konkretne kroki</h4>
+              <div class="alert-item-meta">
+                <span>6 godz. temu</span>
+                <span>·</span>
+                <span>Termin: 01.02.2026</span>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="alert-item" role="listitem" tabindex="0">
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <span class="alert-dot dot-med" aria-label="Średni priorytet"></span>
+            <div>
+              <div class="alert-item-tag tag-pit">Podatki</div>
+              <h4>Podatek minimalny CIT: kto płaci, kto jest zwolniony w 2025?</h4>
+              <div class="alert-item-meta">
+                <span>Wczoraj</span>
+                <span>·</span>
+                <span>Zmiana od I 2025</span>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="alert-item" role="listitem" tabindex="0">
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <span class="alert-dot dot-med" aria-label="Średni priorytet"></span>
+            <div>
+              <div class="alert-item-tag tag-pp">Prawo pracy</div>
+              <h4>Urlop opiekuńczy 5 dni: nowe zasady i kiedy przysługuje</h4>
+              <div class="alert-item-meta">
+                <span>2 dni temu</span>
+                <span>·</span>
+                <span>Wchodzi IX 2025</span>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="alert-item" role="listitem" tabindex="0">
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <span class="alert-dot dot-low" aria-label="Niski priorytet"></span>
+            <div>
+              <div class="alert-item-tag tag-ue">EU</div>
+              <h4>AI Act wchodzi w życie: co MŚP musi wiedzieć teraz?</h4>
+              <div class="alert-item-meta">
+                <span>3 dni temu</span>
+                <span>·</span>
+                <span>Phased enforcement</span>
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- FEATURED WIDE ARTICLE: KSeF -->
+<section class="articles-section" aria-labelledby="featured-heading">
+  <div class="section-header">
+    <div class="section-header-left">
+      <div class="section-tab">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>
+        <h2 id="featured-heading">Temat tygodnia</h2>
+      </div>
+    </div>
+    <div class="section-header-right">
+      <a href="podatki.html" class="link-more">Wszystkie tematy →</a>
+    </div>
+  </div>
+
+  <article class="article-wide" aria-label="Wyróżniony artykuł o KSeF">
+    <div class="article-wide-content fade-up">
+      <div class="alert-item-tag tag-ksef" style="margin-bottom:1rem;display:inline-flex">KSeF · Obowiązkowy</div>
+      <h3>KSeF 2026: kompletny przewodnik dla właściciela małej firmy</h3>
+      <p style="font-size:14px;color:var(--text2);line-height:1.7;margin:1rem 0">Krajowy System e-Faktur staje się obowiązkowy. Dla dużych firm (obrót +2M PLN) już od 1 lutego 2026, dla pozostałych — od 1 kwietnia 2026. Co to oznacza dla Ciebie, jak się przygotować i które narzędzia wspierają integrację.</p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <a href="#" class="btn btn-primary" style="font-size:12px;padding:8px 16px">Czytaj przewodnik →</a>
+        <span style="font-size:12px;color:var(--text3)">Czas czytania: 7 min · Aktualizowany</span>
+      </div>
+    </div>
+    <div class="article-wide-visual" aria-hidden="true">
+      <div class="visual-grid-bg"></div>
+      <div class="visual-ksef">
+        <div style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:4px;letter-spacing:.08em;text-transform:uppercase">Przepływ faktury w KSeF</div>
+        <div class="ksef-flow">
+          <div class="ksef-box">Twoja firma</div>
+          <div class="ksef-arrow">→</div>
+          <div class="ksef-box active">KSeF MF</div>
+          <div class="ksef-arrow">→</div>
+          <div class="ksef-box">Kontrahent</div>
+        </div>
+        <div class="ksef-date-badge">Termin: 01.02.2026 dla obrotu +2M PLN</div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+          <span style="font-size:10px;color:var(--green);background:var(--green-bg);padding:3px 8px;border-radius:2px;border:1px solid rgba(78,155,111,.2)">inFakt ✓ integracja</span>
+          <span style="font-size:10px;color:var(--blue);background:var(--blue-bg);padding:3px 8px;border-radius:2px;border:1px solid rgba(74,126,199,.2)">wFirma ✓ integracja</span>
+          <span style="font-size:10px;color:var(--gold);background:var(--gold-bg);padding:3px 8px;border-radius:2px;border:1px solid rgba(201,168,76,.2)">Fakturownia ✓ integracja</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ARTICLES 3-COL GRID -->
+  <div class="articles-grid" id="przewodniki" role="list" aria-label="Lista artykułów">
+
+    <article class="article-card fade-up" role="listitem" tabindex="0" aria-label="Artykuł o składce zdrowotnej 2025">
+      <div class="article-card-top">
+        <div class="alert-item-tag tag-zus">ZUS</div>
+        <div class="importance-badge imp-h" aria-label="Wysoki priorytet">!</div>
+      </div>
+      <h3>Składka zdrowotna 2025: ile zapłacisz na liniowym, B2B i ryczałcie?</h3>
+      <p>Po zmianach z 2024 roku zasady naliczania składki zdrowotnej różnią się zależnie od formy opodatkowania. Sprawdź konkretne kwoty i czy warto zmienić formę rozliczenia.</p>
+      <div class="article-card-footer">
+        <span class="article-date">22 maja 2025</span>
+        <span class="article-read">Czytaj → <span>5 min</span></span>
+      </div>
+    </article>
+
+    <article class="article-card fade-up" role="listitem" tabindex="0" aria-label="Artykuł o podatku minimalnym CIT">
+      <div class="article-card-top">
+        <div class="alert-item-tag tag-pit">CIT</div>
+        <div class="importance-badge imp-m" aria-label="Średni priorytet">~</div>
+      </div>
+      <h3>Podatek minimalny CIT: nowe zasady, zwolnienia i jak go uniknąć legalnie</h3>
+      <p>Od 2025 roku firmy nierentowne lub o niskiej dochodowości mogą być objęte podatkiem minimalnym. Tłumaczymy kto płaci, jak wyliczyć i kiedy przysługuje zwolnienie.</p>
+      <div class="article-card-footer">
+        <span class="article-date">20 maja 2025</span>
+        <span class="article-read">Czytaj → <span>6 min</span></span>
+      </div>
+    </article>
+
+    <article class="article-card fade-up" role="listitem" tabindex="0" aria-label="Artykuł o ryczałcie dla IT">
+      <div class="article-card-top">
+        <div class="alert-item-tag tag-pit">Ryczałt</div>
+        <div class="importance-badge imp-l" aria-label="Niski priorytet">✓</div>
+      </div>
+      <h3>Ryczałt dla programistów i branży IT w 2025: stawki, kody PKD i pułapki</h3>
+      <p>Stawka 12% czy 8.5%? To zależy od rodzaju usług. Konkretne kody PKD i wyjaśnienie które usługi IT kwalifikują się do niższej stawki ryczałtu.</p>
+      <div class="article-card-footer">
+        <span class="article-date">18 maja 2025</span>
+        <span class="article-read">Czytaj → <span>4 min</span></span>
+      </div>
+    </article>
+
+    <article class="article-card fade-up" role="listitem" tabindex="0" aria-label="Artykuł o urlopie opiekuńczym">
+      <div class="article-card-top">
+        <div class="alert-item-tag tag-pp">Prawo pracy</div>
+        <div class="importance-badge imp-m" aria-label="Średni priorytet">~</div>
+      </div>
+      <h3>Urlop opiekuńczy, siła wyższa i praca zdalna — zmiany w Kodeksie pracy 2025</h3>
+      <p>Nowe uprawnienia pracownicze wchodzą w życie etapami. Co jako pracodawca musisz wiedzieć i jak dostosować regulamin pracy. Checklista dla działu HR.</p>
+      <div class="article-card-footer">
+        <span class="article-date">15 maja 2025</span>
+        <span class="article-read">Czytaj → <span>5 min</span></span>
+      </div>
+    </article>
+
+    <article class="article-card fade-up" role="listitem" tabindex="0" aria-label="Artykuł o CIT estońskim">
+      <div class="article-card-top">
+        <div class="alert-item-tag tag-pit">Estoński CIT</div>
+        <div class="importance-badge imp-l" aria-label="Niski priorytet">✓</div>
+      </div>
+      <h3>Estoński CIT 2025: kto może skorzystać i jak przejść bez ryzyka?</h3>
+      <p>Ryczałt od dochodów spółek pozwala odroczyć podatek do momentu wypłaty zysku. Sprawdź warunki, pułapki i czy Twoja spółka kwalifikuje się do skorzystania.</p>
+      <div class="article-card-footer">
+        <span class="article-date">12 maja 2025</span>
+        <span class="article-read">Czytaj → <span>8 min</span></span>
+      </div>
+    </article>
+
+    <article class="article-card fade-up" role="listitem" tabindex="0" aria-label="Artykuł o AI Act">
+      <div class="article-card-top">
+        <div class="alert-item-tag tag-ue">AI Act · UE</div>
+        <div class="importance-badge imp-m" aria-label="Średni priorytet">~</div>
+      </div>
+      <h3>AI Act dla MŚP: co musisz zrobić, zanim regulacje staną się obowiązkowe?</h3>
+      <p>Unijna regulacja AI wchodzi w życie etapami do 2027. Firmy używające AI w procesach biznesowych już teraz powinny ocenić poziom ryzyka swoich systemów.</p>
+      <div class="article-card-footer">
+        <span class="article-date">10 maja 2025</span>
+        <span class="article-read">Czytaj → <span>6 min</span></span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider-tag">
+  <span class="label" style="color:var(--gold)">Partnerzy</span>
+  <span>Polecane narzędzia — wybrane przez redakcję <span class="affiliate-note">link partnerski</span></span>
+</div>
+
+<!-- TOOLS / AFFILIATE -->
+<section class="tools-section" id="narzedzia" aria-labelledby="tools-heading">
+  <div class="section-header">
+    <div class="section-header-left">
+      <div class="section-tab">
+        <h2 id="tools-heading">Narzędzia dla Twojej firmy</h2>
+      </div>
+    </div>
+    <div class="section-header-right">
+      <a href="narzedzia.html" class="link-more">Wszystkie narzędzia →</a>
+    </div>
+  </div>
+  <div class="tools-grid" role="list" aria-label="Polecane narzędzia">
+
+    <div class="tool-card fade-up" role="listitem" tabindex="0" aria-label="inFakt – fakturowanie i księgowość">
+      <div class="tool-logo" aria-hidden="true" style="background:#1A2A1A;border-color:rgba(78,155,111,.3);color:#4E9B6F">iF</div>
+      <span class="tool-badge">KSeF gotowy</span>
+      <h4>inFakt</h4>
+      <div class="tool-rating"><span class="tool-stars">★★★★★</span> <span>4.8 · 14k opinii</span></div>
+      <p>Fakturowanie, pełna księgowość online i integracja z KSeF. Idealny dla samozatrudnionych i spółek z o.o. Wsparcie podatkowe w cenie.</p>
+      <a href="#" class="tool-cta" aria-label="Sprawdź inFakt">Sprawdź bezpłatnie →</a>
+    </div>
+
+    <div class="tool-card fade-up" role="listitem" tabindex="0" aria-label="wFirma – program do fakturowania">
+      <div class="tool-logo" aria-hidden="true" style="background:#1A1A2A;border-color:rgba(74,126,199,.3);color:#4A7EC7">wF</div>
+      <span class="tool-badge new">Nowość 2025</span>
+      <h4>wFirma</h4>
+      <div class="tool-rating"><span class="tool-stars">★★★★★</span> <span>4.7 · 9k opinii</span></div>
+      <p>Prosty program do fakturowania z automatycznym JPK, KSeF i rozliczeniami ZUS. Nieograniczona liczba faktur w każdym planie.</p>
+      <a href="#" class="tool-cta" aria-label="Sprawdź wFirma">30 dni za darmo →</a>
+    </div>
+
+    <div class="tool-card fade-up" role="listitem" tabindex="0" aria-label="Fakturownia – fakturowanie online">
+      <div class="tool-logo" aria-hidden="true" style="background:#2A1A1A;border-color:rgba(200,75,58,.3);color:#C84B3A">Fa</div>
+      <span class="tool-badge">Popularne</span>
+      <h4>Fakturownia</h4>
+      <div class="tool-rating"><span class="tool-stars">★★★★☆</span> <span>4.5 · 22k opinii</span></div>
+      <p>Jeden z najpopularniejszych systemów fakturowania w Polsce. Działa z każdą formą opodatkowania, integruje się z KSeF i bankami.</p>
+      <a href="#" class="tool-cta" aria-label="Sprawdź Fakturownia">Zacznij za darmo →</a>
+    </div>
+
+    <div class="tool-card fade-up" role="listitem" tabindex="0" aria-label="Taxe – kancelaria podatkowa online">
+      <div class="tool-logo" aria-hidden="true" style="background:#1E1A12;border-color:rgba(201,168,76,.3);color:var(--gold)">Tx</div>
+      <span class="tool-badge" style="background:rgba(150,100,200,.12);color:#A070D8;border-color:rgba(150,100,200,.2)">Doradztwo</span>
+      <h4>Kancelaria Online</h4>
+      <div class="tool-rating"><span class="tool-stars">★★★★★</span> <span>4.9 · 3k opinii</span></div>
+      <p>Wirtualne biuro rachunkowe z dedykowanym doradcą podatkowym. Miesięczna stała opłata, nielimitowane pytania. Polecane dla firm 500k+ PLN obrotu.</p>
+      <a href="#" class="tool-cta" aria-label="Sprawdź kancelarie online">Bezpłatna konsultacja →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CALCULATORS -->
+<section class="calc-section" aria-labelledby="calc-heading">
+  <div class="section-header">
+    <div class="section-header-left">
+      <div class="section-tab">
+        <h2 id="calc-heading">Kalkulatory i narzędzia AI</h2>
+      </div>
+    </div>
+    <div class="section-header-right">
+      <a href="narzedzia.html" class="link-more">Wszystkie kalkulatory →</a>
+    </div>
+  </div>
+  <div class="calc-grid" role="list" aria-label="Dostępne kalkulatory">
+
+    <div class="calc-card fade-up" role="listitem" tabindex="0" aria-label="Kalkulator składek ZUS 2025">
+      <div class="calc-num" aria-hidden="true">01</div>
+      <div class="calc-body">
+        <h4>Kalkulator składek ZUS 2025</h4>
+        <p>Oblicz dokładnie składki ZUS dla samozatrudnionych, preferencyjne, pełne i dla spółek. Aktualizowany po każdej zmianie.</p>
+        <a href="kalkulator-zus.html" class="btn btn-ghost">Oblicz teraz</a>
+      </div>
+    </div>
+
+    <div class="calc-card fade-up" role="listitem" tabindex="0" aria-label="Sprawdzarka zgodności KSeF">
+      <div class="calc-num" aria-hidden="true">02</div>
+      <div class="calc-body">
+        <h4>Sprawdzarka gotowości na KSeF</h4>
+        <p>Odpowiedz na 8 pytań i dowiedz się, czy Twoja firma jest gotowa na KSeF i co powinieneś zrobić przed terminem.</p>
+        <a href="kalkulator-ksef.html" class="btn btn-ghost">Sprawdź firmę</a>
+      </div>
+    </div>
+
+    <div class="calc-card fade-up" role="listitem" tabindex="0" aria-label="Porównywarka form opodatkowania">
+      <div class="calc-num" aria-hidden="true">03</div>
+      <div class="calc-body">
+        <h4>Liniowy vs ryczałt vs skala — co wybrać?</h4>
+        <p>Podaj swoje przychody i koszty — kalkulator AI pokaże która forma opodatkowania da Ci najniższy podatek w 2025 roku.</p>
+        <a href="kalkulator-podatki.html" class="btn btn-ghost">Porównaj formy</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section" id="newsletter" aria-labelledby="newsletter-heading">
+  <div class="newsletter-left fade-up">
+    <span class="label" style="color:var(--gold);display:block;margin-bottom:1rem">Newsletter · Bezpłatny</span>
+    <h2 id="newsletter-heading">Każdy tydzień.<br><em>Każda ważna zmiana.</em></h2>
+    <p>Tygodniowy brief regulacyjny — wyłącznie to, co ma wpływ na Twoją firmę. Zero spamu. Możliwość wypisania się w każdej chwili. Dołącz do 12 400 polskich przedsiębiorców.</p>
+    <form class="newsletter-form" action="#" method="post" aria-label="Formularz zapisu na newsletter">
+      <label for="email-input" class="sr-only">Twój adres e-mail</label>
+      <input
+        type="email"
+        id="email-input"
+        name="email"
+        class="newsletter-input"
+        placeholder="twój@email.pl"
+        required
+        autocomplete="email"
+        aria-label="Adres e-mail"
+      >
+      <button type="submit" class="newsletter-submit" aria-label="Zapisz się na newsletter">
+        Zapisuję się
+      </button>
+    </form>
+    <p class="newsletter-trust">Twój e-mail nigdy nie będzie sprzedany. RODO compliant.</p>
+  </div>
+
+  <div class="newsletter-right">
+    <span class="label" style="color:var(--text3);display:block;margin-bottom:1.5rem">Co dostajesz w każdym wydaniu</span>
+    <div class="newsletter-perks" role="list" aria-label="Zawartość newslettera">
+      <div class="perk" role="listitem">
+        <div class="perk-icon" aria-hidden="true">📋</div>
+        <div class="perk-text">
+          <h5>Zmiany tygodnia <span class="perk-count">~3–5</span></h5>
+          <p>Tylko te, które dotyczą małych i średnich firm. Bez zbędnych informacji.</p>
+        </div>
+      </div>
+      <div class="perk" role="listitem">
+        <div class="perk-icon" aria-hidden="true">⚠️</div>
+        <div class="perk-text">
+          <h5>Zbliżające się terminy</h5>
+          <p>JPK, deklaracje, składki ZUS, wejścia w życie nowych przepisów.</p>
+        </div>
+      </div>
+      <div class="perk" role="listitem">
+        <div class="perk-icon" aria-hidden="true">💡</div>
+        <div class="perk-text">
+          <h5>Porada tygodnia</h5>
+          <p>Jeden konkretny sposób na optymalizację kosztów lub podatków.</p>
+        </div>
+      </div>
+      <div class="perk" role="listitem">
+        <div class="perk-icon" aria-hidden="true">🔧</div>
+        <div class="perk-text">
+          <h5>Narzędzie miesiąca <span class="perk-count">premium</span></h5>
+          <p>Recenzja oprogramowania lub usługi dla przedsiębiorców — bez reklam, tylko opinia redakcji.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-col">
+      <div class="footer-logo">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>
+        Regulatora
+      </div>
+      <p>Niezależny serwis monitorowania zmian prawno-podatkowych dla polskich przedsiębiorców. Tłumaczymy prawo na język biznesu.</p>
+      <p style="margin-top:.8rem;font-size:11px;color:var(--text3)">Należy do sieci FinanceWise.pl · RODO · Polityka prywatności</p>
+    </div>
+    <div class="footer-col">
+      <h5>Kategorie</h5>
+      <ul class="footer-links" role="list">
+        <li><a href="zus.html">ZUS i składki</a></li>
+        <li><a href="podatki.html">Podatek dochodowy</a></li>
+        <li><a href="podatki.html">VAT i JPK</a></li>
+        <li><a href="ksef.html">KSeF</a></li>
+        <li><a href="prawo-pracy.html">Prawo pracy</a></li>
+        <li><a href="podatki.html">Dotacje EU</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Narzędzia</h5>
+      <ul class="footer-links" role="list">
+        <li><a href="kalkulator-zus.html">Kalkulator ZUS 2025</a></li>
+        <li><a href="kalkulator-ksef.html">Gotowość na KSeF</a></li>
+        <li><a href="kalkulator-podatki.html">Porównywarka opodatkowania</a></li>
+        <li><a href="narzedzia.html">Terminarz obowiązków</a></li>
+        <li><a href="podatki.html">Stawki VAT 2025</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Informacje</h5>
+      <ul class="footer-links" role="list">
+        <li><a href="#">O serwisie</a></li>
+        <li><a href="#">Polityka prywatności</a></li>
+        <li><a href="#">Zasady afiliacji</a></li>
+        <li><a href="#">Kontakt</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Regulatora / FinanceWise.pl</p>
+    <p class="footer-disclaimer">Treści publikowane w serwisie mają charakter informacyjny i nie stanowią porady prawnej ani podatkowej. W sprawach wymagających indywidualnej oceny skonsultuj się z doradcą podatkowym lub prawnikiem. Serwis zawiera linki partnerskie — prowizja nie wpływa na treść artykułów.</p>
+    <p>Wykonano z ♥ dla polskich przedsiębiorców</p>
+  </div>
+</footer>
+
+<!-- SKIP TO MAIN -->
+<a href="#hero-heading" class="sr-only" style="position:absolute;top:-100px;left:0;background:var(--gold);color:var(--bg);padding:8px 16px;z-index:200;border-radius:0 0 4px 0;transition:top .2s">Przejdź do treści głównej</a>
+
+<!-- SR ONLY HELPER -->
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+
+<script>
+// Scroll fade-in observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach((el, i) => {
+  el.style.transitionDelay = (i % 3) * 60 + 'ms';
+  observer.observe(el);
+});
+
+// Newsletter form
+const form = document.querySelector('.newsletter-form');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.newsletter-submit');
+    const input = form.querySelector('.newsletter-input');
+    btn.textContent = '✓ Zapisano!';
+    btn.style.background = 'var(--green)';
+    input.value = '';
+    input.disabled = true;
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Zapisuję się';
+      btn.style.background = '';
+      input.disabled = false;
+      btn.disabled = false;
+    }, 3000);
+  });
+}
+
+// Nav scroll effect
+const nav = document.querySelector('.nav');
+window.addEventListener('scroll', () => {
+  nav.style.borderBottomColor = window.scrollY > 10
+    ? 'rgba(255,255,255,0.12)'
+    : 'rgba(255,255,255,0.08)';
+}, { passive: true });
+
+// Alert items keyboard
+document.querySelectorAll('.alert-item, .article-card, .tool-card, .calc-card').forEach(el => {
+  el.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      this.click();
+    }
+  });
+});
+</script>
+
+</body>
+</html>

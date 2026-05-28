@@ -1,0 +1,129 @@
+# Regulatora / FinanceWise.pl
+
+Inteligentny monitoring zmian prawno-podatkowych dla polskich przedsiębiorców.
+Statyczna strona HTML — deployowana na **Cloudflare Pages** przez **GitHub Actions**.
+
+---
+
+## Struktura projektu
+
+```
+regulatora/
+├── index.html                  # Strona główna
+├── style.css                   # Wspólny design system
+│
+├── zus.html                    # Kategoria: ZUS i składki
+├── ksef.html                   # Kategoria: KSeF
+├── podatki.html                # Kategoria: Podatki
+├── prawo-pracy.html            # Kategoria: Prawo pracy
+├── narzedzia.html              # Narzędzia i kalkulatory
+│
+├── kalkulator-zus.html         # ✅ Kalkulator ZUS 2025 (w pełni działający)
+├── kalkulator-ksef.html        # ✅ Sprawdzarka gotowości KSeF (quiz 8 pytań)
+├── kalkulator-podatki.html     # ✅ Porównywarka form opodatkowania
+│
+├── _headers                    # Cloudflare Pages: nagłówki bezpieczeństwa
+├── _redirects                  # Cloudflare Pages: czyste URL-e
+├── robots.txt                  # SEO
+├── sitemap.xml                 # SEO — aktualizuj po dodaniu artykułów
+│
+└── .github/
+    └── workflows/
+        └── deploy.yml          # Auto-deploy na Cloudflare Pages
+```
+
+---
+
+## Deployment na Cloudflare Pages
+
+### 1. Utwórz projekt w Cloudflare Pages
+
+1. Wejdź na [dash.cloudflare.com](https://dash.cloudflare.com) → **Pages**
+2. Kliknij **Create a project** → **Connect to Git**
+3. Wybierz swoje repo GitHub
+4. Ustawienia build:
+   - **Build command**: *(zostaw puste — czysty HTML)*
+   - **Build output directory**: `/` (korzeń repo)
+   - **Root directory**: *(puste)*
+
+### 2. Dodaj sekrety GitHub Actions
+
+W repozytorium GitHub → **Settings → Secrets and variables → Actions**:
+
+| Secret | Wartość |
+|--------|---------|
+| `CF_API_TOKEN` | Token z Cloudflare → **My Profile → API Tokens → Create Token** (szablon: *Edit Cloudflare Workers*) |
+| `CF_ACCOUNT_ID` | Cloudflare Dashboard → prawy panel → **Account ID** |
+
+### 3. Skonfiguruj token Cloudflare
+
+W Cloudflare: **My Profile → API Tokens → Create Token**
+
+Wybierz szablon **Custom token** z uprawnieniami:
+- `Account → Cloudflare Pages → Edit`
+- `Account → Account Settings → Read`
+
+### 4. Push do main = automatyczny deploy
+
+```bash
+git add .
+git commit -m "feat: deploy Regulatora"
+git push origin main
+```
+
+GitHub Actions uruchamia workflow → Cloudflare Pages deployuje w ~30 sekund.
+
+---
+
+## Własna domena (regulatora.pl)
+
+1. Cloudflare Pages → projekt → **Custom domains**
+2. Dodaj `regulatora.pl` i `www.regulatora.pl`
+3. Cloudflare automatycznie ustawi DNS i SSL (jeśli domena jest na Cloudflare)
+
+---
+
+## Jak dodawać artykuły
+
+Artykuły to osobne pliki HTML. Skopiuj szablon:
+
+```bash
+cp zus.html artykuly/skladka-zdrowotna-2025.html
+```
+
+Zaktualizuj:
+- `<title>` i `<meta name="description">`
+- treść artykułu w `.articles-grid` lub osobnym layoucie
+- dodaj URL do `sitemap.xml`
+
+---
+
+## Monetyzacja — linki afiliacyjne
+
+Podłącz linki w plikach:
+- `index.html` → sekcja `#narzedzia` (karty narzędzi)
+- `narzedzia.html` → sekcja `.tools-4-grid`
+- Wyniki kalkulatorów (`.result-tools`) w `kalkulator-ksef.html`
+
+Sieci: **MyLead.pl**, **LeadStar.pl** — kategoria fintech/SaaS.
+
+---
+
+## Newsletter
+
+Podmień formularz w `index.html` sekcja `#newsletter`:
+- **Mailerlite** (darmowe do 1000 subskrybentów): podmień `action="#"` na URL embedded form
+- **Beehiiv** / **Substack**: alternatywy
+
+---
+
+## SEO — pierwsze kroki
+
+1. Zgłoś `sitemap.xml` do Google Search Console
+2. Sprawdź Core Web Vitals (strona jest statyczna → wyniki powinny być doskonałe)
+3. Dodawaj artykuły z frazami: `"ZUS 2025"`, `"KSeF obowiązek"`, `"kalkulator składek ZUS"`
+4. Linkuj wewnętrznie kalkulatory z artykułów kategorii
+
+---
+
+*Regulatora / FinanceWise.pl — © 2025*

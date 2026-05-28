@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSeF — Krajowy System e-Faktur 2025/2026 — Regulatora</title>
+<meta name="description" content="KSeF obowiązkowy od 2026 roku. Przewodniki, terminy, integracje i kalkulator gotowości. Wszystko co musisz wiedzieć o KSeF.">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+.deadline-grid{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
+.dl-card{padding:2rem clamp(1rem,3vw,2rem);border-right:1px solid var(--border)}
+.dl-card:last-child{border-right:none}
+.dl-date{font-family:var(--ff-display);font-size:1.8rem;font-weight:700;color:var(--gold);margin-bottom:.4rem}
+.dl-who{font-size:13px;color:var(--text2);margin-bottom:.4rem}
+.dl-desc{font-size:12px;color:var(--text3);line-height:1.5}
+.dl-card.urgent{border-left:3px solid var(--red)}
+.dl-date.red{color:var(--red)}
+.timeline{border-bottom:1px solid var(--border);padding:2rem clamp(1rem,4vw,3rem)}
+.tl-row{display:flex;gap:16px;align-items:flex-start;margin-bottom:1.2rem}
+.tl-row:last-child{margin-bottom:0}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.tl-dot.done{background:var(--green)}
+.tl-dot.now{background:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.2)}
+.tl-dot.future{background:var(--bg3);border:1px solid var(--border2)}
+.tl-body h4{font-size:13px;font-weight:500;margin-bottom:2px;font-family:var(--ff-body)}
+.tl-body p{font-size:12px;color:var(--text2);line-height:1.4}
+.tl-date{font-size:11px;color:var(--text3);margin-bottom:3px}
+@media(max-width:600px){.deadline-grid{grid-template-columns:1fr}.dl-card{border-right:none;border-bottom:1px solid var(--border)}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>Regulatora</a>
+  <nav class="nav-links">
+    <a href="podatki.html">Podatki</a><a href="zus.html">ZUS</a><a href="ksef.html" class="active">KSeF</a><a href="prawo-pracy.html">Prawo pracy</a><a href="narzedzia.html">Narzędzia</a>
+    <a href="index.html#newsletter" class="nav-cta">Newsletter →</a>
+  </nav>
+  <div class="nav-right"><div class="nav-alert">KSeF · 01.02.2026</div></div>
+</div></nav>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Strona główna</a><span>›</span><span>KSeF</span></div>
+  <h1>KSeF — <em>obowiązek 2026</em></h1>
+  <p>Krajowy System e-Faktur stanie się obowiązkowy dla wszystkich firm w Polsce. Dowiedz się kiedy, jak się przygotować i które oprogramowanie obsługuje integrację.</p>
+  <div style="display:flex;gap:10px;margin-top:1.2rem;flex-wrap:wrap">
+    <a href="kalkulator-ksef.html" class="btn btn-primary">Sprawdź gotowość firmy →</a>
+    <a href="#przewodniki" class="btn btn-ghost">Przewodniki KSeF</a>
+  </div>
+</div>
+
+<div style="padding:1rem clamp(1rem,4vw,3rem);border-bottom:1px solid var(--border);background:var(--red-bg)">
+  <div style="display:flex;align-items:center;gap:10px;max-width:900px">
+    <span style="font-size:20px;flex-shrink:0">⚠️</span>
+    <div>
+      <strong style="font-size:13px">Uwaga: podwójny termin obowiązku KSeF</strong>
+      <p style="font-size:12px;color:var(--text2);margin-top:2px">Firmy z obrotem powyżej 2 mln zł — obowiązek od <strong>1 lutego 2026</strong>. Pozostałe firmy (w tym zwolnione z VAT) — od <strong>1 kwietnia 2026</strong>. Kary za naruszenie: do 100% kwoty VAT na fakturze.</p>
+    </div>
+  </div>
+</div>
+
+<div class="deadline-grid">
+  <div class="dl-card urgent">
+    <div class="dl-date red">01.02.2026</div>
+    <div class="dl-who">Firmy z obrotem powyżej 2 mln zł (2024)</div>
+    <div class="dl-desc">Najwcześniejszy termin. Czynni podatnicy VAT z przychodem powyżej 2 000 000 zł w roku poprzednim muszą wystawiać faktury wyłącznie przez KSeF.</div>
+  </div>
+  <div class="dl-card">
+    <div class="dl-date">01.04.2026</div>
+    <div class="dl-who">Wszystkie pozostałe firmy (w tym zwolnione z VAT)</div>
+    <div class="dl-desc">Drugi termin dla mniejszych firm i podmiotów zwolnionych z VAT podmiotowo lub przedmiotowo. Od tej daty KSeF obowiązuje powszechnie.</div>
+  </div>
+</div>
+
+<div class="timeline">
+  <div style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:1.2rem">Harmonogram wdrożenia KSeF</div>
+  <div class="tl-row"><div class="tl-dot done"></div><div class="tl-body"><div class="tl-date">Lipiec 2024</div><h4>KSeF dobrowolny — środowisko produkcyjne dostępne</h4><p>Firmy mogą dobrowolnie wystawiać faktury ustrukturyzowane w KSeF.</p></div></div>
+  <div class="tl-row"><div class="tl-dot now"></div><div class="tl-body"><div class="tl-date">2025 — teraz</div><h4>Okres przygotowawczy — integracje i testy</h4><p>Czas na wdrożenie oprogramowania, uzyskanie tokenów i przetestowanie integracji. Środowisko testowe działa na demo.ksef.mf.gov.pl.</p></div></div>
+  <div class="tl-row"><div class="tl-dot future"></div><div class="tl-body"><div class="tl-date">1 lutego 2026</div><h4>Obowiązek KSeF — firmy powyżej 2 mln zł obrotu</h4><p>Faktury krajowe między podatnikami VAT muszą być wystawiane wyłącznie w KSeF.</p></div></div>
+  <div class="tl-row"><div class="tl-dot future"></div><div class="tl-body"><div class="tl-date">1 kwietnia 2026</div><h4>Powszechny obowiązek KSeF — wszystkie firmy</h4><p>KSeF obowiązkowy dla wszystkich podmiotów, w tym zwolnionych z VAT.</p></div></div>
+</div>
+
+<div class="section-header" id="przewodniki">
+  <div class="section-header-left"><div class="section-tab"><h2>Przewodniki KSeF</h2></div></div>
+  <a href="#" class="link-more">Wszystkie →</a>
+</div>
+
+<div class="articles-grid">
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-ksef">KSeF · Obowiązkowy</span></div>
+    <h3>KSeF 2026: kompletny przewodnik dla właściciela małej firmy</h3>
+    <p>Co to jest KSeF, jak działa, kogo dotyczy i od kiedy. Krok po kroku wyjaśniamy cały proces — od rejestracji po wystawienie pierwszej faktury przez system MF.</p>
+    <div class="article-card-footer"><span class="article-date">25 maja 2025</span><span class="article-read">Czytaj → 7 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-ksef">KSeF · Token</span></div>
+    <h3>Jak wygenerować token KSeF i nadać uprawnienia biuru rachunkowemu?</h3>
+    <p>Token API to klucz do KSeF dla programów. Wyjaśniamy jak go wygenerować w bramce produkcyjnej, jak nadać uprawnienia i co zrobić gdy token wygaśnie.</p>
+    <div class="article-card-footer"><span class="article-date">22 maja 2025</span><span class="article-read">Czytaj → 5 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-ksef">KSeF · UPO</span></div>
+    <h3>Numer KSeF i UPO: co oznaczają i jak je przechowywać?</h3>
+    <p>Każda faktura w KSeF otrzymuje unikalny numer KSeF i Urzędowe Poświadczenie Odbioru. Tłumaczymy co to znaczy dla Twojej księgowości i archiwizacji dokumentów.</p>
+    <div class="article-card-footer"><span class="article-date">18 maja 2025</span><span class="article-read">Czytaj → 4 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-ksef">KSeF · Wyjątki</span></div>
+    <h3>Kto jest zwolniony z KSeF? Faktury zagraniczne, B2C i inne wyjątki</h3>
+    <p>Nie wszystkie faktury trafiają do KSeF. Eksport towarów, WDT, faktury dla osób fizycznych bez NIP — sprawdź które sytuacje są wyłączone i do kiedy.</p>
+    <div class="article-card-footer"><span class="article-date">14 maja 2025</span><span class="article-read">Czytaj → 5 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-ksef">KSeF · Oprogramowanie</span></div>
+    <h3>Najlepsze programy do fakturowania gotowe na KSeF — porównanie 2025</h3>
+    <p>inFakt, wFirma, Fakturownia, Comarch, Symfonia — porównujemy 8 popularnych programów pod kątem integracji z KSeF, ceny i łatwości migracji.</p>
+    <div class="article-card-footer"><span class="article-date">10 maja 2025</span><span class="article-read">Czytaj → 8 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-ksef">KSeF · Kary</span></div>
+    <h3>Kary za brak KSeF: ile wynoszą i kiedy grożą?</h3>
+    <p>Za wystawienie faktury poza KSeF po terminie obowiązku grożą kary do 100% VAT. Wyjaśniamy jak są naliczane, kiedy można uniknąć i co robić w razie awarii systemu.</p>
+    <div class="article-card-footer"><span class="article-date">6 maja 2025</span><span class="article-read">Czytaj → 4 min</span></div>
+  </article>
+</div>
+
+<footer class="footer"><div class="footer-top">
+  <div class="footer-col"><div class="footer-logo"><span style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>Regulatora</div><p>Niezależny serwis monitorowania zmian prawno-podatkowych dla polskich przedsiębiorców.</p></div>
+  <div class="footer-col"><h5>Kategorie</h5><ul class="footer-links"><li><a href="zus.html">ZUS i składki</a></li><li><a href="podatki.html">Podatek dochodowy</a></li><li><a href="ksef.html">KSeF</a></li><li><a href="prawo-pracy.html">Prawo pracy</a></li></ul></div>
+  <div class="footer-col"><h5>Kalkulatory</h5><ul class="footer-links"><li><a href="kalkulator-zus.html">Kalkulator ZUS 2025</a></li><li><a href="kalkulator-ksef.html">Gotowość na KSeF</a></li><li><a href="kalkulator-podatki.html">Formy opodatkowania</a></li></ul></div>
+  <div class="footer-col"><h5>Informacje</h5><ul class="footer-links"><li><a href="#">O serwisie</a></li><li><a href="#">Polityka prywatności</a></li><li><a href="#">Kontakt</a></li></ul></div>
+</div><div class="footer-bottom"><p>© 2025 Regulatora / FinanceWise.pl</p><p class="footer-disclaimer">Treści informacyjne. Nie stanowią porady prawnej ani podatkowej.</p></div></footer>
+<script>const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.fade-up').forEach((el,i)=>{el.style.transitionDelay=(i%3)*60+'ms';obs.observe(el)});</script>
+</body></html>

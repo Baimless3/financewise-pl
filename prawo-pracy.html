@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narzędzia dla przedsiębiorców 2025 — Regulatora</title>
+<meta name="description" content="Kalkulatory ZUS, kalkulator podatku, sprawdzarka KSeF i polecane oprogramowanie dla polskich firm. Darmowe narzędzia online.">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+.tools-hero-grid{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border)}
+.th-card{padding:2rem clamp(1rem,3vw,2rem);border-right:1px solid var(--border);display:flex;flex-direction:column;transition:background .2s;cursor:pointer}
+.th-card:last-child{border-right:none}
+.th-card:hover{background:rgba(255,255,255,.02)}
+.th-icon{font-size:2rem;margin-bottom:.8rem}
+.th-card h3{font-family:var(--ff-display);font-size:1.1rem;font-weight:600;margin-bottom:.5rem;transition:color .2s}
+.th-card:hover h3{color:var(--gold)}
+.th-card p{font-size:13px;color:var(--text2);line-height:1.5;flex:1;margin-bottom:1rem}
+.th-link{font-size:12px;color:var(--gold);display:flex;align-items:center;gap:4px}
+.affiliate-section{border-bottom:1px solid var(--border)}
+.tools-4-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.tool-card{padding:1.6rem;border-right:1px solid var(--border);display:flex;flex-direction:column;transition:background .2s}
+.tool-card:last-child{border-right:none}
+.tool-card:hover{background:rgba(255,255,255,.02)}
+.tool-logo{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-size:15px;font-weight:700;margin-bottom:1rem;border:1px solid var(--border2)}
+.tool-card h4{font-size:14px;font-weight:500;margin-bottom:4px;font-family:var(--ff-body)}
+.tool-card p{font-size:12px;color:var(--text2);line-height:1.5;flex:1;margin-bottom:12px}
+.tool-cta{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:var(--gold);transition:gap .2s}
+.tool-card:hover .tool-cta{gap:8px}
+.tool-stars{color:var(--gold);font-size:10px}
+.tool-badge{display:inline-block;font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;margin-bottom:6px;background:var(--gold-bg);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+.tool-badge.new{background:var(--green-bg);color:var(--green);border-color:rgba(78,155,111,.2)}
+.external-tools{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border)}
+.et-card{padding:1.4rem clamp(1rem,2.5vw,2rem);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.et-card:nth-child(3n){border-right:none}
+.et-card h4{font-size:13px;font-weight:500;margin-bottom:3px;font-family:var(--ff-body)}
+.et-card p{font-size:12px;color:var(--text2);line-height:1.4;margin-bottom:.5rem}
+.et-card a{font-size:11px;color:var(--gold)}
+@media(max-width:900px){.tools-hero-grid{grid-template-columns:1fr}.th-card{border-right:none;border-bottom:1px solid var(--border)}.tools-4-grid{grid-template-columns:1fr 1fr}.tool-card:nth-child(2n){border-right:none}.external-tools{grid-template-columns:1fr 1fr}.et-card:nth-child(3n){border-right:1px solid var(--border)}.et-card:nth-child(2n){border-right:none}}
+@media(max-width:600px){.tools-4-grid{grid-template-columns:1fr}.tool-card{border-right:none;border-bottom:1px solid var(--border)}.external-tools{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>Regulatora</a>
+  <nav class="nav-links">
+    <a href="podatki.html">Podatki</a><a href="zus.html">ZUS</a><a href="ksef.html">KSeF</a><a href="prawo-pracy.html">Prawo pracy</a><a href="narzedzia.html" class="active">Narzędzia</a>
+    <a href="index.html#newsletter" class="nav-cta">Newsletter →</a>
+  </nav>
+  <div class="nav-right"><div class="nav-alert">3 kalkulatory online</div></div>
+</div></nav>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Strona główna</a><span>›</span><span>Narzędzia</span></div>
+  <h1>Narzędzia i <em>kalkulatory</em></h1>
+  <p>Darmowe kalkulatory online, polecane oprogramowanie do fakturowania i księgowości oraz zewnętrzne zasoby dla polskich przedsiębiorców.</p>
+</div>
+
+<div class="tools-hero-grid">
+  <a href="kalkulator-zus.html" class="th-card" style="text-decoration:none;color:inherit">
+    <div class="th-icon">🧮</div>
+    <h3>Kalkulator ZUS 2025</h3>
+    <p>Oblicz składki ZUS dla preferencyjnych, pełnych i Małego ZUS Plus. Z podziałem na emerytalne, rentowe, chorobowe i zdrowotne. Wszystkie formy opodatkowania.</p>
+    <div class="th-link">Otwórz kalkulator →</div>
+  </a>
+  <a href="kalkulator-ksef.html" class="th-card" style="text-decoration:none;color:inherit">
+    <div class="th-icon">✅</div>
+    <h3>Sprawdzarka gotowości KSeF</h3>
+    <p>8 pytań — i dowiesz się czy Twoja firma jest gotowa na obowiązkowy KSeF. Spersonalizowany plan działania z konkretnymi krokami do wykonania.</p>
+    <div class="th-link">Sprawdź swoją firmę →</div>
+  </a>
+  <a href="kalkulator-podatki.html" class="th-card" style="text-decoration:none;color:inherit">
+    <div class="th-icon">📊</div>
+    <h3>Porównywarka form opodatkowania</h3>
+    <p>Porównaj skala vs liniowy vs ryczałt z pełnym uwzględnieniem ZUS, składki zdrowotnej i podatku dochodowego. Rekomendacja dla Twoich przychodów.</p>
+    <div class="th-link">Porównaj formy →</div>
+  </a>
+</div>
+
+<div class="section-header"><div class="section-header-left"><div class="section-tab"><h2>Polecane oprogramowanie <span class="affiliate-note" style="margin-left:6px">linki partnerskie</span></h2></div></div></div>
+<div class="affiliate-section">
+  <div class="tools-4-grid">
+    <div class="tool-card">
+      <div class="tool-logo" style="background:#1A2A1A;border-color:rgba(78,155,111,.3);color:#4E9B6F">iF</div>
+      <span class="tool-badge">KSeF gotowy</span>
+      <h4>inFakt</h4>
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px"><span class="tool-stars">★★★★★</span><span style="font-size:10px;color:var(--text3)">4.8 · 14k</span></div>
+      <p>Fakturowanie, pełna księgowość online i integracja z KSeF. Dedykowany doradca podatkowy w cenie planu. Idealny dla JDG i sp. z o.o.</p>
+      <a href="#" class="tool-cta">Sprawdź bezpłatnie →</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-logo" style="background:#1A1A2A;border-color:rgba(74,126,199,.3);color:#4A7EC7">wF</div>
+      <span class="tool-badge new">Nowość 2025</span>
+      <h4>wFirma</h4>
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px"><span class="tool-stars">★★★★★</span><span style="font-size:10px;color:var(--text3)">4.7 · 9k</span></div>
+      <p>Prosty program do fakturowania z automatycznym JPK, KSeF i rozliczeniami ZUS. Nieograniczona liczba faktur w każdym planie. 30 dni gratis.</p>
+      <a href="#" class="tool-cta">30 dni za darmo →</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-logo" style="background:#2A1A1A;border-color:rgba(200,75,58,.3);color:#C84B3A">Fa</div>
+      <span class="tool-badge">Popularny</span>
+      <h4>Fakturownia</h4>
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px"><span class="tool-stars">★★★★☆</span><span style="font-size:10px;color:var(--text3)">4.5 · 22k</span></div>
+      <p>Jeden z najpopularniejszych systemów fakturowania w Polsce. KSeF, JPK, integracje z bankami i programami księgowymi. Darmowy start.</p>
+      <a href="#" class="tool-cta">Zacznij za darmo →</a>
+    </div>
+    <div class="tool-card">
+      <div class="tool-logo" style="background:#1E1A12;border-color:rgba(201,168,76,.3);color:var(--gold)">KO</div>
+      <span class="tool-badge" style="background:rgba(150,100,200,.12);color:#A070D8;border-color:rgba(150,100,200,.2)">Doradztwo</span>
+      <h4>Kancelaria Online</h4>
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px"><span class="tool-stars">★★★★★</span><span style="font-size:10px;color:var(--text3)">4.9 · 3k</span></div>
+      <p>Wirtualne biuro rachunkowe — dedykowany doradca, nielimitowane pytania, stała miesięczna opłata. Dla firm 500k+ PLN obrotu.</p>
+      <a href="#" class="tool-cta">Bezpłatna konsultacja →</a>
+    </div>
+  </div>
+</div>
+
+<div class="section-header"><div class="section-header-left"><div class="section-tab"><h2>Zewnętrzne zasoby oficjalne</h2></div></div></div>
+<div class="external-tools">
+  <div class="et-card"><h4>🏛 Ministerstwo Finansów</h4><p>Oficjalne akty prawne, interpretacje, JPK, KSeF i e-Urząd Skarbowy.</p><a href="https://www.gov.pl/web/finanse" target="_blank" rel="noopener">gov.pl/web/finanse →</a></div>
+  <div class="et-card"><h4>🏛 Zakład Ubezpieczeń Społecznych</h4><p>PUE ZUS, kalkulatory składek, formularze i e-inspektorat ubezpieczeń.</p><a href="https://www.zus.pl" target="_blank" rel="noopener">zus.pl →</a></div>
+  <div class="et-card"><h4>📄 KSeF — bramka produkcyjna</h4><p>Oficjalny system Ministerstwa Finansów do wystawiania faktur ustrukturyzowanych.</p><a href="https://ksef.mf.gov.pl" target="_blank" rel="noopener">ksef.mf.gov.pl →</a></div>
+  <div class="et-card"><h4>🧪 KSeF — środowisko testowe</h4><p>Bezpieczne środowisko testowe do sprawdzenia integracji przed wdrożeniem produkcyjnym.</p><a href="https://demo.ksef.mf.gov.pl" target="_blank" rel="noopener">demo.ksef.mf.gov.pl →</a></div>
+  <div class="et-card"><h4>📜 ISAP — Internetowy System Aktów Prawnych</h4><p>Baza Dziennika Ustaw i Monitora Polskiego. Wyszukiwarka aktów prawnych.</p><a href="https://isap.sejm.gov.pl" target="_blank" rel="noopener">isap.sejm.gov.pl →</a></div>
+  <div class="et-card"><h4>🔍 Wyszukiwarka PKD / PKWiU</h4><p>Sprawdź kod PKD i PKWiU dla swojej działalności — ważne przy wyborze stawki ryczałtu.</p><a href="https://www.biznes.gov.pl/pl/firma/zakladanie-firmy/chce-zalozyc-firme-jednoosobowa-samozatrudnienie/p/kody-pkd" target="_blank" rel="noopener">biznes.gov.pl →</a></div>
+</div>
+
+<footer class="footer"><div class="footer-top">
+  <div class="footer-col"><div class="footer-logo"><span style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>Regulatora</div><p>Niezależny serwis monitorowania zmian prawno-podatkowych dla polskich przedsiębiorców.</p></div>
+  <div class="footer-col"><h5>Kategorie</h5><ul class="footer-links"><li><a href="zus.html">ZUS i składki</a></li><li><a href="podatki.html">Podatek dochodowy</a></li><li><a href="ksef.html">KSeF</a></li><li><a href="prawo-pracy.html">Prawo pracy</a></li></ul></div>
+  <div class="footer-col"><h5>Kalkulatory</h5><ul class="footer-links"><li><a href="kalkulator-zus.html">Kalkulator ZUS 2025</a></li><li><a href="kalkulator-ksef.html">Gotowość na KSeF</a></li><li><a href="kalkulator-podatki.html">Formy opodatkowania</a></li></ul></div>
+  <div class="footer-col"><h5>Informacje</h5><ul class="footer-links"><li><a href="#">O serwisie</a></li><li><a href="#">Polityka prywatności</a></li><li><a href="#">Kontakt</a></li></ul></div>
+</div><div class="footer-bottom"><p>© 2025 Regulatora / FinanceWise.pl</p><p class="footer-disclaimer">Treści informacyjne. Nie stanowią porady prawnej ani podatkowej. Serwis zawiera linki partnerskie.</p></div></footer>
+</body></html>

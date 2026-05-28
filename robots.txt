@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prawo pracy 2025 — Regulatora</title>
+<meta name="description" content="Zmiany w Kodeksie pracy 2025: urlopy, praca zdalna, dyrektywy EU. Aktualne przepisy dla pracodawców i pracowników.">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+.changes-strip{border-bottom:1px solid var(--border);padding:1.5rem clamp(1rem,4vw,3rem)}
+.changes-strip h3{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:1rem}
+.change-items{display:flex;flex-direction:column;gap:8px}
+.change-item{display:flex;align-items:flex-start;gap:12px;padding:.8rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px}
+.ci-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.change-item h4{font-size:13px;font-weight:500;margin-bottom:2px;font-family:var(--ff-body)}
+.change-item p{font-size:12px;color:var(--text2);line-height:1.4}
+.ci-date{font-size:10px;color:var(--text3);margin-left:auto;white-space:nowrap;padding-left:10px}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-logo"><span class="nav-logo-dot"></span>Regulatora</a>
+  <nav class="nav-links">
+    <a href="podatki.html">Podatki</a><a href="zus.html">ZUS</a><a href="ksef.html">KSeF</a><a href="prawo-pracy.html" class="active">Prawo pracy</a><a href="narzedzia.html">Narzędzia</a>
+    <a href="index.html#newsletter" class="nav-cta">Newsletter →</a>
+  </nav>
+  <div class="nav-right"><div class="nav-alert">Zmiany KP · 2025</div></div>
+</div></nav>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Strona główna</a><span>›</span><span>Prawo pracy</span></div>
+  <h1>Prawo pracy <em>2025</em></h1>
+  <p>Urlop opiekuńczy, siła wyższa, praca zdalna w Kodeksie pracy, dyrektywy EU w polskim prawie — aktualne zmiany dla pracodawców i pracowników. Bez prawniczego żargonu.</p>
+</div>
+
+<div class="changes-strip">
+  <h3>Najważniejsze zmiany 2024–2025</h3>
+  <div class="change-items">
+    <div class="change-item"><div class="ci-dot" style="background:var(--green)"></div><div><h4>Urlop opiekuńczy — 5 dni bezpłatnych</h4><p>Nowe prawo do 5 dni urlopu opiekuńczego w roku na opiekę nad krewnym lub domownikiem. Bez zachowania prawa do wynagrodzenia.</p></div><span class="ci-date">IX 2025</span></div>
+    <div class="change-item"><div class="ci-dot" style="background:var(--green)"></div><div><h4>Siła wyższa — 2 dni lub 16 godzin</h4><p>Prawo do zwolnienia od pracy z powodu siły wyższej (pilne sprawy rodzinne, wypadek, choroba). 50% wynagrodzenia za ten czas.</p></div><span class="ci-date">wdrożone</span></div>
+    <div class="change-item"><div class="ci-dot" style="background:var(--gold)"></div><div><h4>Praca zdalna w Kodeksie pracy — obowiązki pracodawcy</h4><p>Kodeksowe uregulowanie pracy zdalnej: pokrycie kosztów, ekwiwalent, kontrola, zasady BHP. Nowe wymogi dla regulaminów.</p></div><span class="ci-date">obowiązuje</span></div>
+    <div class="change-item"><div class="ci-dot" style="background:var(--gold)"></div><div><h4>Urlop rodzicielski — wydłużenie dla ojców</h4><p>Implementacja dyrektywy EU: dodatkowe 9 tygodni urlopu rodzicielskiego wyłącznie dla ojca. Nie można przenieść na matkę.</p></div><span class="ci-date">obowiązuje</span></div>
+    <div class="change-item"><div class="ci-dot" style="background:var(--blue)"></div><div><h4>Elastyczna organizacja pracy — wniosek rodzica</h4><p>Rodzice dzieci do lat 8 mogą wnioskować o elastyczny czas pracy (praca zdalna, skrócone godziny, ruchomy czas pracy). Odmowa wymaga uzasadnienia.</p></div><span class="ci-date">obowiązuje</span></div>
+  </div>
+</div>
+
+<div class="section-header"><div class="section-header-left"><div class="section-tab"><h2>Przewodniki dla pracodawców</h2></div></div><a href="#" class="link-more">Wszystkie →</a></div>
+
+<div class="articles-grid">
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-pp">Prawo pracy · Urlopy</span></div>
+    <h3>Nowe urlopy 2025: opiekuńczy, siła wyższa, rodzicielski — checklista dla pracodawcy</h3>
+    <p>Kompletna checklista zmian w urlopach po implementacji dyrektywy work-life balance. Co dopisać do regulaminu, jak ewidencjonować i jakie dokumenty zbierać.</p>
+    <div class="article-card-footer"><span class="article-date">23 maja 2025</span><span class="article-read">Czytaj → 6 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-pp">Praca zdalna</span></div>
+    <h3>Praca zdalna w Kodeksie pracy: regulamin, koszty i kontrola pracownika</h3>
+    <p>Od 2023 roku praca zdalna jest w KP. Jako pracodawca musisz pokryć koszty lub wypłacić ekwiwalent. Jak ustalić kwotę, czy możesz kontrolować pracownika i jak napisać regulamin.</p>
+    <div class="article-card-footer"><span class="article-date">19 maja 2025</span><span class="article-read">Czytaj → 7 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-pp">Minimalne wynagrodzenie</span></div>
+    <h3>Minimalne wynagrodzenie 2025: 4 666 zł brutto — co zmienia się dla pracodawców?</h3>
+    <p>Wzrost minimalnego wynagrodzenia wpływa na umowy zlecenie, składki ZUS i koszty pracy. Sprawdź co musisz zaktualizować i jakie konsekwencje dla wynagrodzenia minimalnego na akord.</p>
+    <div class="article-card-footer"><span class="article-date">15 maja 2025</span><span class="article-read">Czytaj → 4 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-pp">B2B vs UoP</span></div>
+    <h3>B2B vs umowa o pracę w 2025: co się bardziej opłaca po zmianach w składce zdrowotnej?</h3>
+    <p>Reforma składki zdrowotnej zmieniła kalkulację. Liczymy dokładnie co się opłaca na różnych poziomach wynagrodzenia z uwzględnieniem ZUS, podatku i świadczeń pracowniczych.</p>
+    <div class="article-card-footer"><span class="article-date">11 maja 2025</span><span class="article-read">Czytaj → 8 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-pp">AI Act · Pracownicy</span></div>
+    <h3>AI Act a prawa pracownika: monitoring, algorytmy i co pracodawca musi ujawnić</h3>
+    <p>Unijna regulacja AI nakłada nowe obowiązki wobec pracowników gdy firma używa systemów AI do zarządzania, oceny lub rekrutacji. Co ujawnić i jak dostosować regulamin pracy.</p>
+    <div class="article-card-footer"><span class="article-date">7 maja 2025</span><span class="article-read">Czytaj → 5 min</span></div>
+  </article>
+  <article class="article-card fade-up">
+    <div style="margin-bottom:.8rem"><span class="tag tag-pp">Wypowiedzenie</span></div>
+    <h3>Wypowiedzenie umowy o pracę 2025: okresy, odszkodowania i pułapki dla pracodawcy</h3>
+    <p>Okresy wypowiedzenia, odprawy, zwolnienie dyscyplinarne — aktualne przepisy i najczęstsze błędy pracodawców skutkujące przegraną w sądzie pracy.</p>
+    <div class="article-card-footer"><span class="article-date">3 maja 2025</span><span class="article-read">Czytaj → 6 min</span></div>
+  </article>
+</div>
+
+<footer class="footer"><div class="footer-top">
+  <div class="footer-col"><div class="footer-logo"><span style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>Regulatora</div><p>Niezależny serwis monitorowania zmian prawno-podatkowych dla polskich przedsiębiorców.</p></div>
+  <div class="footer-col"><h5>Kategorie</h5><ul class="footer-links"><li><a href="zus.html">ZUS i składki</a></li><li><a href="podatki.html">Podatek dochodowy</a></li><li><a href="ksef.html">KSeF</a></li><li><a href="prawo-pracy.html">Prawo pracy</a></li></ul></div>
+  <div class="footer-col"><h5>Kalkulatory</h5><ul class="footer-links"><li><a href="kalkulator-zus.html">Kalkulator ZUS 2025</a></li><li><a href="kalkulator-ksef.html">Gotowość na KSeF</a></li><li><a href="kalkulator-podatki.html">Formy opodatkowania</a></li></ul></div>
+  <div class="footer-col"><h5>Informacje</h5><ul class="footer-links"><li><a href="#">O serwisie</a></li><li><a href="#">Polityka prywatności</a></li><li><a href="#">Kontakt</a></li></ul></div>
+</div><div class="footer-bottom"><p>© 2025 Regulatora / FinanceWise.pl</p><p class="footer-disclaimer">Treści informacyjne. Nie stanowią porady prawnej ani podatkowej.</p></div></footer>
+<script>const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.fade-up').forEach((el,i)=>{el.style.transitionDelay=(i%3)*60+'ms';obs.observe(el)});</script>
+</body></html>
